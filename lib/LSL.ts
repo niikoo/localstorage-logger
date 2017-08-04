@@ -8,12 +8,12 @@ export {NullLogger} from './loggers/NullLogger';
 
 export {DefaultFormatter} from './formatters/DefaultFormatter';
 
-export {LogBootstrapper} from './LogBootstrapper';
+export {ngAlogyBootstrapper} from './ng-alogy';
 
 import {ILocalStorageLoggerConfiguration} from './loggers/ILocalStorageLoggerConfiguration';
-import {LogBootstrapper} from './LogBootstrapper';
+import {ngAlogyBootstrapper} from './ng-alogy';
 import {ILog} from './ILog';
-const defaultBootstrapper = new LogBootstrapper();
-export default function (config:ILocalStorageLoggerConfiguration) : ILog {
+const defaultBootstrapper = new ngAlogyBootstrapper();
+export default function createLog(config:ILocalStorageLoggerConfiguration) : ILog {
   return defaultBootstrapper.bootstrap(config);
 }
