@@ -1,9 +1,9 @@
 {
-    "name": "ng-logger",
+    "name": "ng-alogy",
     "version": "0.2.0",
-    "description": "A logging library for Angular 4+",
+    "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
     "typescript": {
-        "definition": "build/ng-logger.d.ts"
+        "definition": "build/ng-alogy.d.ts"
     },
     "main": "index.js",
     "scripts": {
@@ -24,7 +24,10 @@
         "logger",
         "localstorage"
     ],
-    "author": "ZachBray & niikoo",
+    "authors": [
+        "niikoo",
+        "ZachBray"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/niikoo/ng-logger"

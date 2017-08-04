@@ -1,21 +1,35 @@
-# localstorage-logger
-Logging library for writing to and exporting from local storage.
+# ng-alogy
+
+[^alogy, alogia; In medicine: An inabillity to speak]: alogy. (n.d.) -Ologies &amp; -Isms. (2008). Retrieved August 4 2017 from http://www.thefreedictionary.com/alogy
+
+If you, in fact, can not talk - then you 'have' to write!
+
+**Logging is for you!**
+
+------
+
+Logging library for writing to and exporting from local storage. Can also be used to log to Google Analytics, the console, and it's expandable.
+
+Made for Angular 4+ compatibility. Maintained by niikoo for use with: 
+
+[EXPOSER PLAYER]: https//www.exposer.no	"by Destinet (https://www.destinet.no), in Norwegian."
 
 ## What is it?
 
 This JavaScript library provides a mechanism to log to local storage and export the most recent entries. It will overwrite the oldest entries when writing a new entry if adding the entry makes the log bigger than `maxLogSizeInBytes`.
 
-## Motivation
-At the time of writing, all the libraries we could find that provide logging or queuing in local storage used a single storage key. This means that they had to serialize the whole log/queue on any modification. This resulted in worse performance as the log got bigger.
+## Installation
 
-Instead of a single key, we use many keys. Therefore, the cost of serialization on each modification is much lower than in the other libraries we found. However, this means we lose atomicity when making modifications to the underlying data structure. JavaScript is single-threaded so this doesn't pose much of a problem but theoretically a browser crash at exactly the right moment could corrupt the underlying data structure built on top of local storage.
+```
+npm install --save ng-alogy
+```
 
 ## Usage
 
 This is how you can use the logging functionality:
 
 ```
-import createLog from 'localstorage-logger';
+import createLog from 'ng-alogy';
 
 const log = createLog({
   logName: 'my-app-log-name',
