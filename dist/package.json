@@ -1,0 +1,45 @@
+{
+    "name": "ng-alogy",
+    "version": "0.2.3",
+    "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
+    "typescript": {
+        "definition": "lib/index.d.ts"
+    },
+    "main": "index.js",
+    "scripts": {
+        "transpile": "ngc",
+        "package": "rollup -c",
+        "test": "gulp ci",
+        "minify": "uglifyjs dist/bundles/amazing.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/amazing.umd.min.js",
+        "build": "npm run transpile && npm run package && npm run minify"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/niikoo/ng-logger.git"
+    },
+    "keywords": [
+        "typescript",
+        "library",
+        "angular",
+        "logging",
+        "log",
+        "angular4",
+        "logging-library",
+        "logger",
+        "localstorage"
+    ],
+    "authors": [
+        "niikoo",
+        "ZachBray"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/niikoo/ng-logger"
+    },
+    "homepage": "https://github.com/niikoo/ng-logger#readme",
+    "dependencies": {
+        "@types/google.analytics": "0.0.34",
+        "@angular/compiler": "^4.3.3",
+        "typescript": "^2.4.2"
+    }
+}

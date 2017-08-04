@@ -54,9 +54,9 @@ export class Node<T> {
    * @param config The configuration containing the key prefix
    * @param index The index of the entry in the queue
    */
-  static fromLocalStorage<T>(config: IQueueConfiguration, index: number) {
-    const serializedNode = localStorage.getItem(Node.createKey(config, index));
-    const value = JSON.parse(serializedNode);
+  static fromLocalStorage<T>(config: IQueueConfiguration, index: number): Node<T> {
+    let serializedNode = localStorage.getItem(Node.createKey(config, index));
+    const value = JSON.parse(serializedNode || '{}');
     return new Node<T>(config, index, value);
   }
 }

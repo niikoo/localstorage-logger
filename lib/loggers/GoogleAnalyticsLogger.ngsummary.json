@@ -1,0 +1,1 @@
+{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"class","members":{"__ctor__":[{"__symbolic":"constructor"}],"log":[{"__symbolic":"method"}]}}}],"symbols":[{"__symbol":0,"name":"GoogleAnalyticsLogger","filePath":"C:/Users/niikoo/ng-logger/lib/loggers/GoogleAnalyticsLogger.d.ts"}]}

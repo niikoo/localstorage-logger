@@ -1,3 +1,4 @@
+import { ILogEntry } from './../core/ILogEntry';
 import {ILogger} from './ILogger';
 
 /**
@@ -7,6 +8,6 @@ export class NullLogger implements ILogger {
   /**
    * No-op
    */
-  log(entry) {
+  log(entry: ILogEntry): void {
   }
 }
