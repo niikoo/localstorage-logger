@@ -9,7 +9,7 @@ import {LogLevel} from './core/LogLevel';
 /**
  * Bootstraps the log chain setup.
  */
-export class LogBootstrapper {
+export class ngLogger {
   constructor(private _timestampProvider: () => Date = () => new Date()) {
   }
   /**
