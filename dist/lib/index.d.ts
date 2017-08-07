@@ -1,16 +1,16 @@
+import { DefaultFormatter } from './formatters/DefaultFormatter';
+import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
+import { ILog } from './ILog';
+import { LocalStorageLogger } from './loggers/LocalStorageLogger';
+import { LogLevel } from './core/LogLevel';
 export { IQueueConfiguration } from './queue/IQueueConfiguration';
 export { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 export { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
 export { LocalStorageLogger } from './loggers/LocalStorageLogger';
 export { ConsoleLogger } from './loggers/ConsoleLogger';
 export { NullLogger } from './loggers/NullLogger';
-export { ILog } from './ILog';
 export { DefaultFormatter } from './formatters/DefaultFormatter';
-import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
-import { ILog } from './ILog';
-import { LogLevel } from './core/LogLevel';
-import { LocalStorageLogger } from './loggers/LocalStorageLogger';
-import { DefaultFormatter } from './formatters/DefaultFormatter';
+export { LogLevel } from './core/LogLevel';
 export declare class Alogy {
     private _alogy;
     formatter: DefaultFormatter;

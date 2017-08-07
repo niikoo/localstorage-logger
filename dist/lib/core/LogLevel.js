@@ -1,9 +1,7 @@
 /**
  * Represents various levels of logging.
  */
-/**
- * Represents various levels of logging.
- */ export var LogLevel;
+export var LogLevel;
 (function (LogLevel) {
     LogLevel[LogLevel["TRACE"] = 0] = "TRACE";
     LogLevel[LogLevel["DEBUG"] = 1] = "DEBUG";

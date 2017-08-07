@@ -1,21 +1,16 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-export { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 import { ConsoleLogger } from './loggers/ConsoleLogger';
+import { DefaultFormatter } from './formatters/DefaultFormatter';
+import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
+import { Injectable } from '@angular/core';
+import { LocalStorageLogger } from './loggers/LocalStorageLogger';
+import { LogLevel } from './core/LogLevel';
+import { NullLogger } from './loggers/NullLogger';
+export { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 export { LocalStorageLogger } from './loggers/LocalStorageLogger';
 export { ConsoleLogger } from './loggers/ConsoleLogger';
 export { NullLogger } from './loggers/NullLogger';
 export { DefaultFormatter } from './formatters/DefaultFormatter';
-import { Injectable } from '@angular/core';
-import { LogLevel } from './core/LogLevel';
-import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
-import { LocalStorageLogger } from './loggers/LocalStorageLogger';
-import { DefaultFormatter } from './formatters/DefaultFormatter';
-import { NullLogger } from './loggers/NullLogger';
+export { LogLevel } from './core/LogLevel';
 var Alogy = (function () {
     function Alogy() {
         this._timestampProvider = function () { return new Date; };
@@ -59,11 +54,13 @@ var Alogy = (function () {
                 break;
         }
     };
+    Alogy.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    Alogy.ctorParameters = function () { return []; };
     return Alogy;
 }());
-Alogy = __decorate([
-    Injectable()
-], Alogy);
 export { Alogy };
 var LogAPI = (function () {
     function LogAPI(_alogy, logTo, logGroup) {

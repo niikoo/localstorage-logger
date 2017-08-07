@@ -1,22 +1,24 @@
+import { ConsoleLogger } from './loggers/ConsoleLogger';
+import { DefaultFormatter } from './formatters/DefaultFormatter';
+import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
+import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
+import { ILog } from './ILog';
+import { Injectable } from '@angular/core';
+import { IQueueConfiguration } from './queue/IQueueConfiguration';
+import { LimitedSizeQueue } from './queue/LimitedSizeQueue';
+import { LocalStorageLogger } from './loggers/LocalStorageLogger';
+import { LogLevel } from './core/LogLevel';
 import { NgModule } from '@angular/core';
+import { NullLogger } from './loggers/NullLogger';
+
 export {IQueueConfiguration} from './queue/IQueueConfiguration';
 export {LimitedSizeQueue} from './queue/LimitedSizeQueue';
-import { ConsoleLogger } from './loggers/ConsoleLogger';
 export {ILocalStorageLoggerConfiguration} from './loggers/ILocalStorageLoggerConfiguration';
 export {LocalStorageLogger} from './loggers/LocalStorageLogger';
 export {ConsoleLogger} from './loggers/ConsoleLogger';
 export {NullLogger} from './loggers/NullLogger';
-
 export {DefaultFormatter} from './formatters/DefaultFormatter';
-
-import {ILocalStorageLoggerConfiguration} from './loggers/ILocalStorageLoggerConfiguration';
-import {ILog} from './ILog';
-import { Injectable } from '@angular/core';
-import { LogLevel } from './core/LogLevel';
-import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
-import { LocalStorageLogger } from './loggers/LocalStorageLogger';
-import { DefaultFormatter } from './formatters/DefaultFormatter';
-import { NullLogger } from './loggers/NullLogger';
+export {LogLevel} from './core/LogLevel';
 
 @Injectable()
 export class Alogy {

@@ -1,8 +1,8 @@
 # ng-alogy
 
-[^alogy, alogia; In medicine: An inabillity to speak]: alogy. (n.d.) -Ologies &amp; -Isms. (2008). Retrieved August 4 2017 from http://www.thefreedictionary.com/alogy
+[^**alogy, alogia; In medicine: An inabillity to speak**]: alogy. (n.d.) -Ologies &amp; -Isms. (2008). Retrieved August 4 2017 from http://www.thefreedictionary.com/alogy
 
-If you, in fact, can not talk - then you 'have' to write!
+If you, in fact, can not speak - then you 'have' to write!
 
 **Logging is for you!**
 
@@ -16,7 +16,7 @@ Made for Angular 4+ compatibility. Maintained by niikoo for use with:
 
 ## What is it?
 
-This JavaScript library provides a mechanism to log to local storage and export the most recent entries. It will overwrite the oldest entries when writing a new entry if adding the entry makes the log bigger than `maxLogSizeInBytes`.
+This TypeScript library for Angular 4+ provides a mechanism to log to local storage and export the most recent entries. It will overwrite the oldest entries when writing a new entry if adding the entry makes the log bigger than `maxLogSizeInBytes`.
 
 ## Installation
 
@@ -28,20 +28,65 @@ npm install --save ng-alogy
 
 This is how you can use the logging functionality:
 
+Add the module in `app-module.ts` or another module to use it as injectable service.
+
+This example is based on that:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { Alogy } from 'ng-alogy';
+
+@Injectable()
+export class LogService {
+  constructor(
+  	private _alogy: Alogy
+  ) {
+    this._alogy.create(
+      AlogyLogDestination.LOCAL_STORAGE,
+      <ILocalStorageLoggerConfiguration>{
+        logName: 'testLog', // Log name
+        maxLogSizeInBytes: 2^20 // Log size - in bytes
+    });
+  }
+  
+  /**
+   * Logging interface, logging in a specific logging group.
+   * 
+   * @param {number} logGroup The log group ID number (for example: 3 or 5)
+   * @returns 
+   * @memberof LogService
+   */
+  getLoggingInterface(logGroup: number) : ILog {
+    return this._alogy.getLogAPI(
+      logGroup,
+      AlogyLogDestination.LOCAL_STORAGE
+    );
+  }
+}
 ```
-import createLog from 'ng-alogy';
 
-const log = createLog({
-  logName: 'my-app-log-name',
-  maxLogSizeInBytes: 500 * 1024 // 500KB
-});
+Then, from whatever component or service you'd like:
 
-// Log something
-// debug | info | warn | error
-log.info('something', {
-  foo: 'bar'
-}, 42);
+```typescript
+import { LogService } from './log.service'
+import { ILog } from 'ng-alogy';
 
-// Export the log entries
-const logEntries = log.exportToArray();
+export class Example {
+  private _log: ILog;
+  constructor(
+  	private _logService: LogService
+  ) {
+    this.log = this._logService.getLoggingInterface(15); //15 as an example group
+  }
+
+  isItTrue(test:boolean):void {
+    if(test) {
+      this._log.info('it is true');
+    } else {
+      this._log.error('it is not true');
+    }
+  }
+}
+
 ```
+

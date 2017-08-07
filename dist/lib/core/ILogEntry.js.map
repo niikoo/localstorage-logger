@@ -1,1 +1,1 @@
-{"version":3,"file":"ILogEntry.js","sourceRoot":"","sources":["../../../lib/core/ILogEntry.ts"],"names":[],"mappings":"","sourcesContent":["import {LogLevel} from './LogLevel';\n\n/**\n * Represents an entry in an application log.\n */\nexport interface ILogEntry {\n  /**\n   * The time the log entry was created.\n   */\n  time: string;\n  /**\n   * The log message.\n   */\n  message: string;\n  /**\n   * The log level\n   */\n  level: LogLevel;\n}\n"]}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"ILogEntry.js","sourceRoot":"","sourcesContent":[]}

@@ -1,1 +1,1 @@
-{"version":3,"file":"ILog.js","sourceRoot":"","sources":["../../lib/ILog.ts"],"names":[],"mappings":"","sourcesContent":["/**\n * Allows logging and exporting of the log.\n */\nexport interface ILog {\n  debug(message: string, code?: number): void;\n  info(message: string, code?: number): void;\n  warn(message: string, code?: number): void;\n  error(message: string, code?: number): void;\n  exportToArray(): string[];\n}\n"]}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"ILog.js","sourceRoot":"","sourcesContent":[]}
