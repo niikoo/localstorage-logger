@@ -1,6 +1,6 @@
 var dts = require('dts-bundle');
 
 dts.bundle({
-    name: 'LSL',
-    main: 'build/LSL.d.ts'
-}); 
+    name: 'ngAlogy',
+    main: 'dist/index.d.ts'
+});
