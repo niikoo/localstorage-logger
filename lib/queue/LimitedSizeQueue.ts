@@ -28,7 +28,7 @@ export class LimitedSizeQueue<T> {
     const spaceRequirement = node.estimatedSize();
     const canFit = this._config.maxSizeInBytes >= spaceRequirement;
     if (!canFit) {
-      const message = 'LSL: Value is too big to store. Reverting to previous state.';
+      const message = 'ng-Alogy: Value is too big to store. Reverting to previous state.';
       console.error(message);
       this._bookkeeper.reset();
       throw new Error(message);

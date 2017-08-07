@@ -1,5 +1,5 @@
 {
-    "name": "ng-alogy",
+    "name": "ng-alogy-dev",
     "version": "0.2.2",
     "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
     "typescript": {

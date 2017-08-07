@@ -12,7 +12,7 @@ export class GoogleAnalyticsLogger implements ILogger {
      * @param _formatter The formatter used to format the entry for the console
      * @param _nextLogger The next logger in the "log chain"
      */
-    constructor() {
+    constructor(private _formatter: ILogEntryFormatter, private _nextLogger: ILogger) {
     }
 
     /**

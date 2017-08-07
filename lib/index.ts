@@ -24,8 +24,9 @@ export class Alogy {
   private formatter: DefaultFormatter;
   private chainTerminal: NullLogger;
   private consoleLogChain: ConsoleLogger;
-  private localStorageLogChain: LocalStorageLogger;
+  public localStorageLogChain: LocalStorageLogger;
   private googleAnalyticsLogChain: GoogleAnalyticsLogger;
+  private _timestampProvider: () => Date = () => new Date;
   /**
    * Set up Alogy - Global config
    * 
@@ -44,7 +45,7 @@ export class Alogy {
     this.chainTerminal = new NullLogger();
     this.consoleLogChain = new ConsoleLogger(this.formatter, this.chainTerminal);
     this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
-    this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(); //(config, this.localStorageLogChain);
+    this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
   }
 
   getLogAPI(
@@ -53,10 +54,7 @@ export class Alogy {
   ):LogAPI {
     return new LogAPI(this, logTo, logGroup);
   }
-
-
-  private _timestampProvider: () => Date = () => new Date;
-
+  
   writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logCodeGroup: number, code?: number) {
     let time = this._timestampProvider().toISOString();
     /** @todo Missing logCodeGroup + code config */
@@ -96,8 +94,7 @@ export class LogAPI implements ILog {
     this._alogy.writeToLog(this.logTo, LogLevel.ERROR, message, this.logGroup, code);
   }
   exportToArray(): string[] {
-    return [];
-    //return this._alogy.localStorageLogChain.allEntries().map(entry => this.formatter.format(entry)); /** @todo implement this */
+    return this._alogy.localStorageLogChain.allEntries().map(entry => this._alogy.formatter.format(entry)); /** @todo implement this */
   }
 }
 

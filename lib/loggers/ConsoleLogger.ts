@@ -1,6 +1,7 @@
 import {ILogger} from './ILogger';
 import {ILogEntry} from '../core/ILogEntry';
 import {ILogEntryFormatter} from '../formatters/ILogEntryFormatter';
+import { LogLevel } from '../core/LogLevel';
 
 /**
  * Logger that logs to the console.
@@ -20,6 +21,27 @@ export class ConsoleLogger implements ILogger {
    */
   log(entry: ILogEntry) {
     const formattedMessage = this._formatter.format(entry);
+    switch(entry.level) {
+      case LogLevel.DEBUG:
+        console.log(formattedMessage);
+        break;
+      case LogLevel.INFO:
+        console.info(formattedMessage);
+        break;
+      case LogLevel.ERROR:
+      case LogLevel.FATAL:
+        console.error(formattedMessage);
+        break;
+      case LogLevel.WARN:
+        console.warn(formattedMessage);
+        break;
+      case LogLevel.TRACE:
+        console.trace(formattedMessage);
+        break;
+      default:
+        console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
+        break;
+    }
     console.log(formattedMessage);
     this._nextLogger.log(entry);
   }
