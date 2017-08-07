@@ -17,7 +17,7 @@
             "rxjs/*": ["node_modules/rxjs/*"]
         },
         "rootDir": ".",
-        "outDir": "dist",
+        "outDir": "./dist",
         "inlineSources": true,
         "skipLibCheck": true
     },

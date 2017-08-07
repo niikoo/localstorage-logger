@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 export { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 import { ConsoleLogger } from './loggers/ConsoleLogger';
 export { LocalStorageLogger } from './loggers/LocalStorageLogger';
@@ -30,7 +36,7 @@ var Alogy = (function () {
         this.chainTerminal = new NullLogger();
         this.consoleLogChain = new ConsoleLogger(this.formatter, this.chainTerminal);
         this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
-        this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(); //(config, this.localStorageLogChain);
+        this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
     };
     Alogy.prototype.getLogAPI = function (logGroup, logTo) {
         if (logTo === void 0) { logTo = AlogyLogDestination.LOCAL_STORAGE; }
@@ -53,13 +59,11 @@ var Alogy = (function () {
                 break;
         }
     };
-    Alogy.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    Alogy.ctorParameters = function () { return []; };
     return Alogy;
 }());
+Alogy = __decorate([
+    Injectable()
+], Alogy);
 export { Alogy };
 var LogAPI = (function () {
     function LogAPI(_alogy, logTo, logGroup) {
@@ -82,8 +86,8 @@ var LogAPI = (function () {
         this._alogy.writeToLog(this.logTo, LogLevel.ERROR, message, this.logGroup, code);
     };
     LogAPI.prototype.exportToArray = function () {
-        return [];
-        //return this._alogy.localStorageLogChain.allEntries().map(entry => this.formatter.format(entry)); /** @todo implement this */
+        var _this = this;
+        return this._alogy.localStorageLogChain.allEntries().map(function (entry) { return _this._alogy.formatter.format(entry); }); /** @todo implement this */
     };
     return LogAPI;
 }());

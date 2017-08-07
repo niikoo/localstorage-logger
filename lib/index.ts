@@ -21,7 +21,7 @@ import { NullLogger } from './loggers/NullLogger';
 @Injectable()
 export class Alogy {
   private _alogy: ILog;
-  private formatter: DefaultFormatter;
+  public formatter: DefaultFormatter;
   private chainTerminal: NullLogger;
   private consoleLogChain: ConsoleLogger;
   public localStorageLogChain: LocalStorageLogger;
@@ -54,7 +54,7 @@ export class Alogy {
   ):LogAPI {
     return new LogAPI(this, logTo, logGroup);
   }
-  
+
   writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logCodeGroup: number, code?: number) {
     let time = this._timestampProvider().toISOString();
     /** @todo Missing logCodeGroup + code config */

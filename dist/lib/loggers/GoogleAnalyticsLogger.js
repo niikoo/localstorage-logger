@@ -8,7 +8,9 @@ var GoogleAnalyticsLogger = (function () {
      * @param _formatter The formatter used to format the entry for the console
      * @param _nextLogger The next logger in the "log chain"
      */
-    function GoogleAnalyticsLogger() {
+    function GoogleAnalyticsLogger(_formatter, _nextLogger) {
+        this._formatter = _formatter;
+        this._nextLogger = _nextLogger;
     }
     /**
      * Logs an entry to GA

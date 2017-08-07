@@ -21,7 +21,7 @@ var PATHS = {
     src: 'lib',
     build: 'build',
     test: 'test',
-    typings: 'typings',
+    typings: 'typings'
 };
 
 var tsProject = ts.createProject('tsconfig.json', {

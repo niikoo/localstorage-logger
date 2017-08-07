@@ -1,3 +1,4 @@
+import { LogLevel } from '../core/LogLevel';
 /**
  * Logger that logs to the console.
  */
@@ -17,6 +18,27 @@ var ConsoleLogger = (function () {
      */
     ConsoleLogger.prototype.log = function (entry) {
         var formattedMessage = this._formatter.format(entry);
+        switch (entry.level) {
+            case LogLevel.DEBUG:
+                console.log(formattedMessage);
+                break;
+            case LogLevel.INFO:
+                console.info(formattedMessage);
+                break;
+            case LogLevel.ERROR:
+            case LogLevel.FATAL:
+                console.error(formattedMessage);
+                break;
+            case LogLevel.WARN:
+                console.warn(formattedMessage);
+                break;
+            case LogLevel.TRACE:
+                console.trace(formattedMessage);
+                break;
+            default:
+                console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
+                break;
+        }
         console.log(formattedMessage);
         this._nextLogger.log(entry);
     };

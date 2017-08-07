@@ -4,17 +4,21 @@ export { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerC
 export { LocalStorageLogger } from './loggers/LocalStorageLogger';
 export { ConsoleLogger } from './loggers/ConsoleLogger';
 export { NullLogger } from './loggers/NullLogger';
+export { ILog } from './ILog';
 export { DefaultFormatter } from './formatters/DefaultFormatter';
 import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
 import { ILog } from './ILog';
 import { LogLevel } from './core/LogLevel';
+import { LocalStorageLogger } from './loggers/LocalStorageLogger';
+import { DefaultFormatter } from './formatters/DefaultFormatter';
 export declare class Alogy {
     private _alogy;
-    private formatter;
+    formatter: DefaultFormatter;
     private chainTerminal;
     private consoleLogChain;
-    private localStorageLogChain;
+    localStorageLogChain: LocalStorageLogger;
     private googleAnalyticsLogChain;
+    private _timestampProvider;
     /**
      * Set up Alogy - Global config
      *
@@ -26,7 +30,6 @@ export declare class Alogy {
      */
     create(logTo: AlogyLogDestination | undefined, config: ILocalStorageLoggerConfiguration): void;
     getLogAPI(logGroup: number, logTo?: AlogyLogDestination): LogAPI;
-    private _timestampProvider;
     writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logCodeGroup: number, code?: number): void;
 }
 export declare class LogAPI implements ILog {
