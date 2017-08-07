@@ -1,6 +1,6 @@
 {
     "name": "ng-alogy",
-    "version": "0.5.0",
+    "version": "0.5.2",
     "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
     "typescript": {
         "definition": "./index.d.ts"
@@ -31,5 +31,6 @@
         "@types/google.analytics": "0.0.34",
         "@angular/compiler": "^4.3.3",
         "typescript": "^2.4.2"
-    }
+    },
+    "readme": "https://github.com/niikoo/ng-alogy/blob/master/README.md"
 }
