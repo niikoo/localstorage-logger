@@ -15,4 +15,8 @@ export interface ILogEntry {
      * The log level
      */
     level: LogLevel;
+    /**
+     * The log code
+     */
+    code: number;
 }

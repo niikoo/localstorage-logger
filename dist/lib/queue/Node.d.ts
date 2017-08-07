@@ -3,8 +3,8 @@ import { IQueueConfiguration } from './IQueueConfiguration';
  * Each node corresponds to an entry within the queue. This helps with
  * storage and removal from local storage.
  */
-export declare class Node<T> {
-    value: T;
+export declare class Node<ILogEntry> {
+    value: ILogEntry;
     private _key;
     private _serializedNode;
     /**
@@ -13,15 +13,16 @@ export declare class Node<T> {
      * @param index The index within the queue
      * @param value The value of the entry
      */
-    constructor(config: IQueueConfiguration, index: number, value: T);
+    constructor(config: IQueueConfiguration, index: number, value: ILogEntry);
     /**
      * Returns an estimate of the size this will take up in local storage.
      */
     estimatedSize(): number;
     /**
      * Stores the serialized entry in local storage.
+     * @return {boolean} Success?
      */
-    store(): void;
+    store(): boolean;
     /**
      * Removes the entry from local storage if it exists.
      */
@@ -37,5 +38,5 @@ export declare class Node<T> {
      * @param config The configuration containing the key prefix
      * @param index The index of the entry in the queue
      */
-    static fromLocalStorage<T>(config: IQueueConfiguration, index: number): Node<T>;
+    static fromLocalStorage<ILogEntry>(config: IQueueConfiguration, index: number): Node<ILogEntry>;
 }

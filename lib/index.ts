@@ -1,38 +1,50 @@
+import { ILogEntry } from './core/ILogEntry';
 import { ConsoleLogger } from './loggers/ConsoleLogger';
 import { DefaultFormatter } from './formatters/DefaultFormatter';
 import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
 import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
 import { ILog } from './ILog';
-import { Injectable } from '@angular/core';
 import { IQueueConfiguration } from './queue/IQueueConfiguration';
 import { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 import { LocalStorageLogger } from './loggers/LocalStorageLogger';
 import { LogLevel } from './core/LogLevel';
-import { NgModule } from '@angular/core';
 import { NullLogger } from './loggers/NullLogger';
 
-export {IQueueConfiguration} from './queue/IQueueConfiguration';
-export {LimitedSizeQueue} from './queue/LimitedSizeQueue';
-export {ILocalStorageLoggerConfiguration} from './loggers/ILocalStorageLoggerConfiguration';
-export {LocalStorageLogger} from './loggers/LocalStorageLogger';
-export {ConsoleLogger} from './loggers/ConsoleLogger';
-export {NullLogger} from './loggers/NullLogger';
-export {DefaultFormatter} from './formatters/DefaultFormatter';
-export {LogLevel} from './core/LogLevel';
+export { IQueueConfiguration } from './queue/IQueueConfiguration';
+export { LimitedSizeQueue } from './queue/LimitedSizeQueue';
+export { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
+export { LocalStorageLogger } from './loggers/LocalStorageLogger';
+export { ConsoleLogger } from './loggers/ConsoleLogger';
+export { NullLogger } from './loggers/NullLogger';
+export { DefaultFormatter } from './formatters/DefaultFormatter';
+export { LogLevel } from './core/LogLevel';
+export { ILog } from './ILog';
+export { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
+export { ILogEntry } from './core/ILogEntry';
+
+// imports for this file only
+import { Injectable, EventEmitter } from '@angular/core';
+import 'rxjs/Rx';
 
 @Injectable()
 export class Alogy {
   private _alogy: ILog;
-  public formatter: DefaultFormatter;
+  private formatter: DefaultFormatter;
   private chainTerminal: NullLogger;
   private consoleLogChain: ConsoleLogger;
-  public localStorageLogChain: LocalStorageLogger;
+  private localStorageLogChain: LocalStorageLogger;
   private googleAnalyticsLogChain: GoogleAnalyticsLogger;
+  /**
+   * New log entry event -> triggers on new logs
+   * @private
+   * @type {number}
+   * @memberof Alogy
+   */
+  public newLogEntry: EventEmitter<ILogEntry> = new EventEmitter<ILogEntry>();
+  private logGroupSize: number = 100; // Size of log group.Do not touch, unless you're know what you're doing. Default 100, that is for example 0- 99. With group 6, it's: 600-699
   private _timestampProvider: () => Date = () => new Date;
   /**
    * Set up Alogy - Global config
-   * 
-   * 
    * 
    * @param {AlogyLogDestination[]} [logTo=[AlogyLogDestination.LOCAL_STORAGE]] Set this to ´GOOGLE_ANALYTICS´ to have that as upper layer, if ´LOCAL_STORAGE´, analytics is not used.
    * @param {ILocalStorageLoggerConfiguration} config Local storage config
@@ -48,6 +60,9 @@ export class Alogy {
     this.consoleLogChain = new ConsoleLogger(this.formatter, this.chainTerminal);
     this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
     this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
+
+    
+
   }
 
   getLogAPI(
@@ -57,9 +72,26 @@ export class Alogy {
     return new LogAPI(this, logTo, logGroup);
   }
 
-  writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logCodeGroup: number, code?: number) {
+  writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logGroup: number, code?: number) {
     let time = this._timestampProvider().toISOString();
-    /** @todo Missing logCodeGroup + code config */
+    if(typeof code == 'undefined') {
+      code = this.stringToLogCode(message, logGroup, this.logGroupSize)
+    } else {
+      code = this.codeToGroup(code, logGroup, this.logGroupSize);
+    }
+    /*
+    * All logs trigger the newLogEntry event
+    */
+    this.newLogEntry.emit(<ILogEntry>{
+      code: code,
+      message: message,
+      time: time,
+      level: level
+    });
+    
+    /**
+     * To outputs
+     */
     switch (logTo) {
       case AlogyLogDestination.GOOGLE_ANALYTICS:
         console.error('not implemented yet'); /** @todo implement GOOGLE ANALYTICS LOGGING */  
@@ -69,18 +101,59 @@ export class Alogy {
         break;
       case AlogyLogDestination.LOCAL_STORAGE:
         this.localStorageLogChain.log({
-          level, time, message: message
+          level, time, message, code
         });
         break;
     }
   }
+
+  exportToArray(): string[] {
+    return this.localStorageLogChain.allEntries().map(
+      entry => this.formatter.format(entry)
+    );
+  }
+
+  /**
+   * Put log code into the log group.
+   * @param {number} code Log code
+   * @param {number} [logGroup=99] Log group 
+   * @returns {number} Log code within group
+   * @memberof LogAPI
+   */
+  codeToGroup(code: number, logGroup: number = 99, logGroupSize: number = 100): number {
+    let min = logGroup * this.logGroupSize;
+    let max = min + (this.logGroupSize - 1);
+    return (((code < min || code > (min + (this.logGroupSize - 1))) ? this.stringToLogCode(code.toString()) : code));
+  }
+
+  /**
+   * Turn a string into a log code, if you don't know which to use or want it to be generated from the string
+   * @param {String} stc String to turn into a 'code', an number within the range of the logging group
+   * @param {number} [logGroup=99] Log group
+   * @returns {number} Log code within group
+   * @memberof LogAPI
+   */
+  stringToLogCode(stc: String, logGroup: number = 99, logGroupSize: number = 100): number {
+    let prep = 0, code = 0;
+    for (let i = 0; i < stc.length; i++) { prep += stc.charCodeAt(i); }
+    let min = logGroup * this.logGroupSize;
+    let fld = Math.floor((this.logGroupSize / prep) * this.logGroupSize);
+    code = parseInt(logGroup + ((fld < 10) ? '0' : '') + fld);
+    return (((code < min || code > (min + (this.logGroupSize - 1))) ? this.stringToLogCode(code.toString()) : code));
+  }
 }
 
 export class LogAPI implements ILog {
+  /**
+   * Construct a new LogAPI instance 
+   * @param _alogy A reference to the used Alogy instance
+   * @param logTo Log destination?
+   * @param logGroup Which log group
+   */
   constructor(
     private _alogy: Alogy,
     private logTo: AlogyLogDestination = AlogyLogDestination.LOCAL_STORAGE,
-    private logGroup: number = 99,
+    private logGroup: number = 99
   ) {
   }
   debug(message: string, code ?: number) {
@@ -94,9 +167,6 @@ export class LogAPI implements ILog {
   }
   error(message: string, code ?: number) {
     this._alogy.writeToLog(this.logTo, LogLevel.ERROR, message, this.logGroup, code);
-  }
-  exportToArray(): string[] {
-    return this._alogy.localStorageLogChain.allEntries().map(entry => this._alogy.formatter.format(entry)); /** @todo implement this */
   }
 }
 

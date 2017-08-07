@@ -4,7 +4,7 @@ import { Node } from './Node';
  * This class keeps track of the start, end and size of the queue
  * stored in local storage. It allows nodes to be created and removed.
  */
-export declare class Bookkeeper<T> {
+export declare class Bookkeeper<ILogEntry> {
     private _config;
     private _info;
     private _added;
@@ -34,11 +34,11 @@ export declare class Bookkeeper<T> {
      * Creates a new node at the end of the queue.
      * @param value The value to store as an element of the queue.
      */
-    createNextNode(value: T): Node<T>;
+    createNextNode(value: ILogEntry): Node<ILogEntry>;
     /**
      * Removes and returns the first stored node. The consumer should check that there is a node to remove first.
      */
-    deleteFirstNode(): Node<T>;
+    deleteFirstNode(): Node<ILogEntry>;
     /**
      * Iterates through the index values of the elements in the queue. These can be used to retrieve the elements.
      * @param callback The function that will be invoked once for each index value used in the queue.

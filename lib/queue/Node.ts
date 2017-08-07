@@ -4,7 +4,7 @@ import {IQueueConfiguration} from './IQueueConfiguration';
  * Each node corresponds to an entry within the queue. This helps with
  * storage and removal from local storage.
  */
-export class Node<T> {
+export class Node<ILogEntry> {
   private _key: string;
   private _serializedNode: string;
 
@@ -14,7 +14,7 @@ export class Node<T> {
    * @param index The index within the queue
    * @param value The value of the entry
    */
-  constructor(config: IQueueConfiguration, index: number, public value: T) {
+  constructor(config: IQueueConfiguration, index: number, public value: ILogEntry) {
     this._key = Node.createKey(config, index);
     this._serializedNode = JSON.stringify(value);
   }
@@ -28,9 +28,15 @@ export class Node<T> {
 
   /**
    * Stores the serialized entry in local storage.
+   * @return {boolean} Success?
    */
-  store() {
-    localStorage.setItem(this._key, this._serializedNode);
+  store() : boolean {
+    try {
+      localStorage.setItem(this._key, this._serializedNode);
+      return true;
+    } catch(ex) {
+      return false;
+    }
   }
 
   /**
@@ -54,9 +60,9 @@ export class Node<T> {
    * @param config The configuration containing the key prefix
    * @param index The index of the entry in the queue
    */
-  static fromLocalStorage<T>(config: IQueueConfiguration, index: number): Node<T> {
+  static fromLocalStorage<ILogEntry>(config: IQueueConfiguration, index: number): Node<ILogEntry> {
     let serializedNode = localStorage.getItem(Node.createKey(config, index));
     const value = JSON.parse(serializedNode || '{}');
-    return new Node<T>(config, index, value);
+    return new Node<ILogEntry>(config, index, value);
   }
 }

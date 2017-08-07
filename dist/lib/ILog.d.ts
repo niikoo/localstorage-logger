@@ -6,5 +6,4 @@ export interface ILog {
     info(message: string, code?: number): void;
     warn(message: string, code?: number): void;
     error(message: string, code?: number): void;
-    exportToArray(): string[];
 }

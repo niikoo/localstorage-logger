@@ -1,15 +1,11 @@
 /**
  * A logger that doesn't actually do anything. Used for terminating a chain of loggers.
  */
-var NullLogger = (function () {
-    function NullLogger() {
-    }
+export class NullLogger {
     /**
      * No-op
      */
-    NullLogger.prototype.log = function (entry) {
-    };
-    return NullLogger;
-}());
-export { NullLogger };
+    log(entry) {
+    }
+}
 //# sourceMappingURL=NullLogger.js.map

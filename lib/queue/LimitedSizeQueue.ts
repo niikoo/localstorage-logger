@@ -6,15 +6,15 @@ import {IQueueConfiguration} from './IQueueConfiguration';
  * A limited-size queue that is persisted to local storage. Enqueuing
  * elements can remove the oldest elements in order to free up space.
  */
-export class LimitedSizeQueue<T> {
-  private _bookkeeper: Bookkeeper<T>;
+export class LimitedSizeQueue<ILogEntry> {
+  private _bookkeeper: Bookkeeper<ILogEntry>;
 
   /**
    * Creates/restores a queue based on the configuration provided.
    * @param _config The settings for the queue
    */
   constructor(private _config: IQueueConfiguration) {
-    this._bookkeeper = new Bookkeeper<T>(_config);
+    this._bookkeeper = new Bookkeeper<ILogEntry>(_config);
     this._bookkeeper.reset();
   }
 
@@ -23,7 +23,7 @@ export class LimitedSizeQueue<T> {
    * based on the maximum sized defined in the queue configuration. May also throw
    * if local storage is out of space or corrupted.
    */
-  enqueue(value: T) : void {
+  enqueue(value: ILogEntry) : void {
     const node = this._bookkeeper.createNextNode(value);
     const spaceRequirement = node.estimatedSize();
     const canFit = this._config.maxSizeInBytes >= spaceRequirement;
@@ -48,7 +48,7 @@ export class LimitedSizeQueue<T> {
    * If the queue has at least 1 item, it removes and returns the oldest item from the queue.
    * Otherwise, it will return nothing.
    */
-  dequeue() : T | void {
+  dequeue(): ILogEntry | void {
     if (this.isEmpty()) return;
     const node = this._bookkeeper.deleteFirstNode();
     this._bookkeeper.store();
@@ -65,9 +65,9 @@ export class LimitedSizeQueue<T> {
   /**
    * Iterates (without removal) through all items stored in the queue.
    */
-  iterate(callback: (item: T) => void) {
+  iterate(callback: (item: ILogEntry) => void) {
     this._bookkeeper.iterateIndexValues(i => {
-      const node = Node.fromLocalStorage<T>(this._config, i)
+      const node = Node.fromLocalStorage<ILogEntry>(this._config, i)
       callback(node.value);
     });
   }

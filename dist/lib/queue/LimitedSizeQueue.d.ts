@@ -3,7 +3,7 @@ import { IQueueConfiguration } from './IQueueConfiguration';
  * A limited-size queue that is persisted to local storage. Enqueuing
  * elements can remove the oldest elements in order to free up space.
  */
-export declare class LimitedSizeQueue<T> {
+export declare class LimitedSizeQueue<ILogEntry> {
     private _config;
     private _bookkeeper;
     /**
@@ -16,12 +16,12 @@ export declare class LimitedSizeQueue<T> {
      * based on the maximum sized defined in the queue configuration. May also throw
      * if local storage is out of space or corrupted.
      */
-    enqueue(value: T): void;
+    enqueue(value: ILogEntry): void;
     /**
      * If the queue has at least 1 item, it removes and returns the oldest item from the queue.
      * Otherwise, it will return nothing.
      */
-    dequeue(): T | void;
+    dequeue(): ILogEntry | void;
     /**
      * Returns true if the queue is empty.
      */
@@ -29,5 +29,5 @@ export declare class LimitedSizeQueue<T> {
     /**
      * Iterates (without removal) through all items stored in the queue.
      */
-    iterate(callback: (item: T) => void): void;
+    iterate(callback: (item: ILogEntry) => void): void;
 }
