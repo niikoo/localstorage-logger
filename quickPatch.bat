@@ -11,4 +11,5 @@ npm version patch
 cd ..
 npm run test
 npm run build
+npm run publish
 exit

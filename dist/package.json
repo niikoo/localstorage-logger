@@ -32,5 +32,5 @@
         "@angular/compiler": "^4.3.3",
         "typescript": "^2.4.2"
     },
-    "readme": "https://github.com/niikoo/ng-alogy/blob/master/README.md"
+    "readme": "./README.md"
 }

@@ -1,5 +1,3 @@
-/// <reference path="./typings/tsd.d.ts" />
-
 var gulp = require('gulp'),
     ts = require('gulp-typescript'),
     merge = require('merge-stream'),
@@ -77,7 +75,7 @@ gulp.task('scripts:dev', function() {
     return merge([
         tsResult.js
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('.'))
+        .pipe(gulp.dest('./dest'))
     ]);
 });
 gulp.task('scripts:dev:watch', ['scripts:dev'], function() {
@@ -178,7 +176,22 @@ function inc(importance) {
         .pipe(filter('package.json'))
         .pipe(tag_version());
 }
+/**
+ * Bumping dist version
+ */
+function incDist(importance) {
+    return gulp.src(['./package.json'])
+        .pipe(bump({ type: importance }))
+        .pipe(gulp.dest('./'))
+        .pipe(git.commit('Bumps for new ' + importance + ' release.'))
+        .pipe(filter('package.json'))
+        .pipe(tag_version());
+}
 
 gulp.task('patch', function() { return inc('patch'); });
 gulp.task('feature', function() { return inc('minor'); });
 gulp.task('release', function() { return inc('major'); });
+
+gulp.task('patch-dist', function() { return incDist('patch'); });
+gulp.task('feature-dist', function() { return incDist('minor'); });
+gulp.task('release-dist', function() { return incDist('major'); });
