@@ -41,6 +41,13 @@ export class Alogy {
         this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
         this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
     }
+    /**
+     * Get the logging interface which can be used to log and also to devide logs by group or sender.
+     * @param {number} logGroup Log group ID. Select an integer
+     * @param {AlogyLogDestination} [logTo=AlogyLogDestination.LOCAL_STORAGE] Log destination
+     * @returns {LogAPI} The logging interface
+     * @memberof Alogy
+     */
     getLogAPI(logGroup, logTo = AlogyLogDestination.LOCAL_STORAGE) {
         return new LogAPI(this, logTo, logGroup);
     }
@@ -78,8 +85,21 @@ export class Alogy {
                 break;
         }
     }
-    exportToArray() {
+    /**
+     * Returns an array with log entries formatted and returned as strings.
+     * @returns {string[]} String array of logs in Local Storage
+     * @memberof Alogy
+     */
+    exportToStringArray() {
         return this.localStorageLogChain.allEntries().map(entry => this.formatter.format(entry));
+    }
+    /**
+     * Returns an array with all <ILogEntry> in Local Storage
+     * @returns {Array<ILogEntry>} All log entries
+     * @memberof Alogy
+     */
+    exportToLogEntryArray() {
+        return this.localStorageLogChain.allEntries();
     }
     /**
      * Put log code into the log group.
@@ -128,22 +148,57 @@ export class LogAPI {
         this.logTo = logTo;
         this.logGroup = logGroup;
     }
+    /**
+     * Log this debug message [level: debug]
+     *
+     * @param {string} message Debug message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     debug(message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.DEBUG, message, this.logGroup, code);
     }
+    /**
+     * Log this info message [level: info]
+     *
+     * @param {string} message Info message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     info(message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.INFO, message, this.logGroup, code);
     }
+    /**
+     * Log this warning message [level: warn]
+     *
+     * @param {string} message Warning message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     warn(message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.WARN, message, this.logGroup, code);
     }
+    /**
+     * Log this error message [level: error]
+     *
+     * @param {string} message Error message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     error(message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.ERROR, message, this.logGroup, code);
     }
 }
 export var AlogyLogDestination;
 (function (AlogyLogDestination) {
+    /**
+     * @description Log to local storage
+     */
     AlogyLogDestination[AlogyLogDestination["LOCAL_STORAGE"] = 0] = "LOCAL_STORAGE";
+    /**
+     * @description Not implemented yet
+     * @ignore
+     */
     AlogyLogDestination[AlogyLogDestination["GOOGLE_ANALYTICS"] = 1] = "GOOGLE_ANALYTICS"; // GA -> LS -> CONSOLE
 })(AlogyLogDestination || (AlogyLogDestination = {}));
 //# sourceMappingURL=index.js.map

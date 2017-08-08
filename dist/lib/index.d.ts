@@ -39,9 +39,27 @@ export declare class Alogy {
      * @memberof Alogy
      */
     create(logTo: AlogyLogDestination | undefined, config: ILocalStorageLoggerConfiguration): void;
+    /**
+     * Get the logging interface which can be used to log and also to devide logs by group or sender.
+     * @param {number} logGroup Log group ID. Select an integer
+     * @param {AlogyLogDestination} [logTo=AlogyLogDestination.LOCAL_STORAGE] Log destination
+     * @returns {LogAPI} The logging interface
+     * @memberof Alogy
+     */
     getLogAPI(logGroup: number, logTo?: AlogyLogDestination): LogAPI;
     writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logGroup: number, code?: number): void;
-    exportToArray(): string[];
+    /**
+     * Returns an array with log entries formatted and returned as strings.
+     * @returns {string[]} String array of logs in Local Storage
+     * @memberof Alogy
+     */
+    exportToStringArray(): string[];
+    /**
+     * Returns an array with all <ILogEntry> in Local Storage
+     * @returns {Array<ILogEntry>} All log entries
+     * @memberof Alogy
+     */
+    exportToLogEntryArray(): Array<ILogEntry>;
     /**
      * Put log code into the log group.
      * @param {number} code Log code
@@ -70,12 +88,47 @@ export declare class LogAPI implements ILog {
      * @param logGroup Which log group
      */
     constructor(_alogy: Alogy, logTo?: AlogyLogDestination, logGroup?: number);
+    /**
+     * Log this debug message [level: debug]
+     *
+     * @param {string} message Debug message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     debug(message: string, code?: number): void;
+    /**
+     * Log this info message [level: info]
+     *
+     * @param {string} message Info message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     info(message: string, code?: number): void;
+    /**
+     * Log this warning message [level: warn]
+     *
+     * @param {string} message Warning message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     warn(message: string, code?: number): void;
+    /**
+     * Log this error message [level: error]
+     *
+     * @param {string} message Error message
+     * @param {number} [code] Log code (if empty: auto generated)
+     * @memberof LogAPI
+     */
     error(message: string, code?: number): void;
 }
 export declare enum AlogyLogDestination {
+    /**
+     * @description Log to local storage
+     */
     LOCAL_STORAGE = 0,
+    /**
+     * @description Not implemented yet
+     * @ignore
+     */
     GOOGLE_ANALYTICS = 1,
 }
