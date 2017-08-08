@@ -18,3 +18,18 @@ insert_final_newline = true
 
 [*.md]
 trim_trailing_whitespace = false
+
+# Indentation override for all JS under lib directory
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# Indentation override for all TS under lib directory
+[lib/**.ts]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
