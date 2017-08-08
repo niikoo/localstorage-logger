@@ -30,6 +30,8 @@
     "dependencies": {
         "@types/google.analytics": "0.0.34",
         "@angular/compiler": "^4.3.3",
+        "@angular/core": "^4.3.3",
+        "rxjs": "^5.4.2",
         "typescript": "^2.4.2"
     },
     "readme": "./README.md"
