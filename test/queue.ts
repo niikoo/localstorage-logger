@@ -1,4 +1,4 @@
-/// <reference path="../lib//all.d.ts" />
+/// <reference path="../lib/all.d.ts" />
 
 import {LimitedSizeQueue} from '../lib/queue/LimitedSizeQueue';
 

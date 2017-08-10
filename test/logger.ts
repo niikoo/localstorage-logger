@@ -1,7 +1,7 @@
-/// <reference path="../lib//all.d.ts" />
+/// <reference path="../lib/all.d.ts" />
 
 import {ILog} from '../lib/ILog';
-import {LogBootstrapper} from '../lib/LogBootstrapper';
+import { Alogy, AlogyLogDestination} from '../lib/index';
 
 // Make sure full diffs are shown
 (<any> chai).config.truncateThreshold = 0;
@@ -13,13 +13,15 @@ describe('Local storage logger', function() {
   const LOG_NAME = 'test-log';
   const now = new Date();
   const nowFormatted = now.toISOString();
-
+  let _alogy: Alogy;
   let sut: ILog;
   
   beforeEach(() => {
     localStorage.clear();
-    const bootstrapper = new LogBootstrapper(() => now);
-    sut = bootstrapper.bootstrap({
+    _alogy = new Alogy();
+    _alogy.create(
+      AlogyLogDestination.LOCAL_STORAGE,
+      {
       logName: LOG_NAME,
       maxLogSizeInBytes: MAX_SIZE_IN_BYTES
     });
@@ -32,7 +34,7 @@ describe('Local storage logger', function() {
     sut.warn('my warn', 56);
     sut.error('my error', 78);
     // Act
-    const exportedEntries = sut.exportToArray();
+    const exportedEntries = _alogy.exportToStringArray();
     // Assert
     expect(exportedEntries).to.deep.equal([
       `[${nowFormatted}] [DEBUG] "my debug",12`,
