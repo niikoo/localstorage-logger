@@ -1,9 +1,9 @@
 export default {
     entry: 'dist/index.js',
-    dest: 'dist/bundles/amazing.umd.js',
+    dest: 'dist/ng-alogy.min.js',
     sourceMap: false,
     format: 'umd',
-    moduleName: 'ng.alogy',
+    moduleName: 'ngAlogy',
     globals: {
         '@angular/core': 'ng.core',
         'rxjs/Observable': 'Rx',

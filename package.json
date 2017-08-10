@@ -10,7 +10,7 @@
         "transpile": "ngc",
         "package": "rollup -c",
         "test": "gulp ci",
-        "minify": "uglifyjs dist/bundles/amazing.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/amazing.umd.min.js",
+        "minify": "uglifyjs dist/ng-alogy.min.js --screw-ie8 --compress --mangle --comments --output dist/ng-alogy.min.js",
         "build": "npm run transpile && npm run package && npm run minify",
         "quickpatch": "quickPatch.bat"
     },

@@ -39,7 +39,6 @@ export class ConsoleLogger {
                 console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
                 break;
         }
-        console.log(formattedMessage);
         this._nextLogger.log(entry);
     }
 }
