@@ -14,8 +14,8 @@ export { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
 // imports for this file only
 import { Injectable, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
-export class Alogy {
-    constructor() {
+var Alogy = (function () {
+    function Alogy() {
         /**
          * New log entry event -> triggers on new logs
          * @private
@@ -24,7 +24,7 @@ export class Alogy {
          */
         this.newLogEntry = new EventEmitter();
         this.logGroupSize = 100; // Size of log group.Do not touch, unless you're know what you're doing. Default 100, that is for example 0- 99. With group 6, it's: 600-699
-        this._timestampProvider = () => new Date;
+        this._timestampProvider = function () { return new Date; };
     }
     /**
      * Set up Alogy - Global config
@@ -33,14 +33,15 @@ export class Alogy {
      * @param {ILocalStorageLoggerConfiguration} config Local storage config
      * @memberof Alogy
      */
-    create(logTo = AlogyLogDestination.LOCAL_STORAGE, config) {
+    Alogy.prototype.create = function (logTo, config) {
+        if (logTo === void 0) { logTo = AlogyLogDestination.LOCAL_STORAGE; }
         this.formatter = new DefaultFormatter();
         // Chain of responsibility style pattern here...
         this.chainTerminal = new NullLogger();
         this.consoleLogChain = new ConsoleLogger(this.formatter, this.chainTerminal);
         this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
         this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
-    }
+    };
     /**
      * Get the logging interface which can be used to log and also to devide logs by group or sender.
      * @param {number} logGroup Log group ID. Select an integer
@@ -48,11 +49,12 @@ export class Alogy {
      * @returns {LogAPI} The logging interface
      * @memberof Alogy
      */
-    getLogAPI(logGroup, logTo = AlogyLogDestination.LOCAL_STORAGE) {
+    Alogy.prototype.getLogAPI = function (logGroup, logTo) {
+        if (logTo === void 0) { logTo = AlogyLogDestination.LOCAL_STORAGE; }
         return new LogAPI(this, logTo, logGroup);
-    }
-    writeToLog(logTo, level, message, logGroup, code) {
-        let time = this._timestampProvider().toISOString();
+    };
+    Alogy.prototype.writeToLog = function (logTo, level, message, logGroup, code) {
+        var time = this._timestampProvider().toISOString();
         if (typeof code == 'undefined') {
             code = this.stringToLogCode(message, logGroup, this.logGroupSize);
         }
@@ -80,27 +82,28 @@ export class Alogy {
                 break;
             case AlogyLogDestination.LOCAL_STORAGE:
                 this.localStorageLogChain.log({
-                    level, time, message, code
+                    level: level, time: time, message: message, code: code
                 });
                 break;
         }
-    }
+    };
     /**
      * Returns an array with log entries formatted and returned as strings.
      * @returns {string[]} String array of logs in Local Storage
      * @memberof Alogy
      */
-    exportToStringArray() {
-        return this.localStorageLogChain.allEntries().map(entry => this.formatter.format(entry));
-    }
+    Alogy.prototype.exportToStringArray = function () {
+        var _this = this;
+        return this.localStorageLogChain.allEntries().map(function (entry) { return _this.formatter.format(entry); });
+    };
     /**
      * Returns an array with all <ILogEntry> in Local Storage
      * @returns {Array<ILogEntry>} All log entries
      * @memberof Alogy
      */
-    exportToLogEntryArray() {
+    Alogy.prototype.exportToLogEntryArray = function () {
         return this.localStorageLogChain.allEntries();
-    }
+    };
     /**
      * Put log code into the log group.
      * @param {number} code Log code
@@ -108,11 +111,13 @@ export class Alogy {
      * @returns {number} Log code within group
      * @memberof LogAPI
      */
-    codeToGroup(code, logGroup = 99, logGroupSize = 100) {
-        let min = logGroup * this.logGroupSize;
-        let max = min + (this.logGroupSize - 1);
+    Alogy.prototype.codeToGroup = function (code, logGroup, logGroupSize) {
+        if (logGroup === void 0) { logGroup = 99; }
+        if (logGroupSize === void 0) { logGroupSize = 100; }
+        var min = logGroup * this.logGroupSize;
+        var max = min + (this.logGroupSize - 1);
         return (((code < min || code > (min + (this.logGroupSize - 1))) ? this.stringToLogCode(code.toString()) : code));
-    }
+    };
     /**
      * Turn a string into a log code, if you don't know which to use or want it to be generated from the string
      * @param {String} stc String to turn into a 'code', an number within the range of the logging group
@@ -120,30 +125,36 @@ export class Alogy {
      * @returns {number} Log code within group
      * @memberof LogAPI
      */
-    stringToLogCode(stc, logGroup = 99, logGroupSize = 100) {
-        let prep = 0, code = 0;
-        for (let i = 0; i < stc.length; i++) {
+    Alogy.prototype.stringToLogCode = function (stc, logGroup, logGroupSize) {
+        if (logGroup === void 0) { logGroup = 99; }
+        if (logGroupSize === void 0) { logGroupSize = 100; }
+        var prep = 0, code = 0;
+        for (var i = 0; i < stc.length; i++) {
             prep += stc.charCodeAt(i);
         }
-        let min = logGroup * this.logGroupSize;
-        let fld = Math.floor((this.logGroupSize / prep) * this.logGroupSize);
+        var min = logGroup * this.logGroupSize;
+        var fld = Math.floor((this.logGroupSize / prep) * this.logGroupSize);
         code = parseInt(logGroup + ((fld < 10) ? '0' : '') + fld);
         return (((code < min || code > (min + (this.logGroupSize - 1))) ? this.stringToLogCode(code.toString()) : code));
-    }
-}
-Alogy.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-Alogy.ctorParameters = () => [];
-export class LogAPI {
+    };
+    Alogy.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    Alogy.ctorParameters = function () { return []; };
+    return Alogy;
+}());
+export { Alogy };
+var LogAPI = (function () {
     /**
      * Construct a new LogAPI instance
      * @param _alogy A reference to the used Alogy instance
      * @param logTo Log destination?
      * @param logGroup Which log group
      */
-    constructor(_alogy, logTo = AlogyLogDestination.LOCAL_STORAGE, logGroup = 99) {
+    function LogAPI(_alogy, logTo, logGroup) {
+        if (logTo === void 0) { logTo = AlogyLogDestination.LOCAL_STORAGE; }
+        if (logGroup === void 0) { logGroup = 99; }
         this._alogy = _alogy;
         this.logTo = logTo;
         this.logGroup = logGroup;
@@ -155,9 +166,9 @@ export class LogAPI {
      * @param {number} [code] Log code (if empty: auto generated)
      * @memberof LogAPI
      */
-    debug(message, code) {
+    LogAPI.prototype.debug = function (message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.DEBUG, message, this.logGroup, code);
-    }
+    };
     /**
      * Log this info message [level: info]
      *
@@ -165,9 +176,9 @@ export class LogAPI {
      * @param {number} [code] Log code (if empty: auto generated)
      * @memberof LogAPI
      */
-    info(message, code) {
+    LogAPI.prototype.info = function (message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.INFO, message, this.logGroup, code);
-    }
+    };
     /**
      * Log this warning message [level: warn]
      *
@@ -175,9 +186,9 @@ export class LogAPI {
      * @param {number} [code] Log code (if empty: auto generated)
      * @memberof LogAPI
      */
-    warn(message, code) {
+    LogAPI.prototype.warn = function (message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.WARN, message, this.logGroup, code);
-    }
+    };
     /**
      * Log this error message [level: error]
      *
@@ -185,10 +196,12 @@ export class LogAPI {
      * @param {number} [code] Log code (if empty: auto generated)
      * @memberof LogAPI
      */
-    error(message, code) {
+    LogAPI.prototype.error = function (message, code) {
         this._alogy.writeToLog(this.logTo, LogLevel.ERROR, message, this.logGroup, code);
-    }
-}
+    };
+    return LogAPI;
+}());
+export { LogAPI };
 export var AlogyLogDestination;
 (function (AlogyLogDestination) {
     /**

@@ -3,13 +3,13 @@ import { LimitedSizeQueue } from '../queue/LimitedSizeQueue';
  * Logger that logs to a queue in local storage. Will overwrite oldest entries
  * when desired size is exceeded.
  */
-export class LocalStorageLogger {
+var LocalStorageLogger = (function () {
     /**
      * Constructs a new local storage logger.
      * @param config The configuration defining the unique queue name, desired size etc.
      * @param _nextLogger The next logger in the "log chain"
      */
-    constructor(config, _nextLogger) {
+    function LocalStorageLogger(config, _nextLogger) {
         this._nextLogger = _nextLogger;
         this._queue = new LimitedSizeQueue({
             keyPrefix: config.logName,
@@ -19,7 +19,7 @@ export class LocalStorageLogger {
     /**
      * Logs an entry to local storage.
      */
-    log(entry) {
+    LocalStorageLogger.prototype.log = function (entry) {
         try {
             this._queue.enqueue(entry);
         }
@@ -29,14 +29,16 @@ export class LocalStorageLogger {
         finally {
             this._nextLogger.log(entry);
         }
-    }
+    };
     /**
      * Returns all log entries that are still held in local storage.
      */
-    allEntries() {
-        const entries = new Array();
-        this._queue.iterate(entry => entries.push(entry));
+    LocalStorageLogger.prototype.allEntries = function () {
+        var entries = new Array();
+        this._queue.iterate(function (entry) { return entries.push(entry); });
         return entries;
-    }
-}
+    };
+    return LocalStorageLogger;
+}());
+export { LocalStorageLogger };
 //# sourceMappingURL=LocalStorageLogger.js.map
