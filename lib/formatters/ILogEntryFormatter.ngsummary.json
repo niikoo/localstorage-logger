@@ -1,1 +1,1 @@
-{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"interface"}}],"symbols":[{"__symbol":0,"name":"ILogEntryFormatter","filePath":"C:/Users/niikoo/ng-logger/lib/formatters/ILogEntryFormatter.d.ts"}]}
+{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"interface"}}],"symbols":[{"__symbol":0,"name":"ILogEntryFormatter","filePath":"/home/niikoo/Angular/ng-alogy/lib/formatters/ILogEntryFormatter.d.ts"}]}
