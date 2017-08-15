@@ -1,15 +1,13 @@
-@echo off
-echo.
+#!/bin/sh
 echo "Committing patch and incrementing version"
-copy README.md dist\README.md
-copy LICENSE dist\LICENSE
+cp README.md dist\README.md
+cp LICENSE dist\LICENSE
 git add .
 git commit -m "Bugfixes"
 npm version patch
-cd dist\
+cd dist/
 npm version patch
 cd ..
 npm run test
 npm run build
 npm run publish
-exit
