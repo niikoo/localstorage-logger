@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Committing patch and incrementing version"
-cp README.md dist\README.md
-cp LICENSE dist\LICENSE
+cp README.md dist/README.md
+cp LICENSE dist/LICENSE
 git add .
 git commit -m "Bugfixes"
 npm version patch
