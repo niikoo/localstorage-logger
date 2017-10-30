@@ -45,7 +45,7 @@ export class Alogy {
   private _timestampProvider: () => Date = () => new Date;
   /**
    * Set up Alogy - Global config
-   * 
+   *
    * @param {AlogyLogDestination[]} [logTo=[AlogyLogDestination.LOCAL_STORAGE]] Set this to ´GOOGLE_ANALYTICS´ to have that as upper layer, if ´LOCAL_STORAGE´, analytics is not used.
    * @param {ILocalStorageLoggerConfiguration} config Local storage config
    * @memberof Alogy
@@ -61,7 +61,7 @@ export class Alogy {
     this.localStorageLogChain = new LocalStorageLogger(config, this.consoleLogChain);
     this.googleAnalyticsLogChain = new GoogleAnalyticsLogger(this.formatter, this.localStorageLogChain); //(config, this.localStorageLogChain);
 
-    
+
 
   }
   /**
@@ -94,16 +94,21 @@ export class Alogy {
       time: time,
       level: level
     });
-    
+
     /**
      * To outputs
      */
     switch (logTo) {
       case AlogyLogDestination.GOOGLE_ANALYTICS:
-        console.error('not implemented yet'); /** @todo implement GOOGLE ANALYTICS LOGGING */  
+        console.error('not implemented yet'); /** @todo implement GOOGLE ANALYTICS LOGGING */
         /*this.localStorageLogChain.log({
           level, time, message: message
         });*/
+        break;
+      case AlogyLogDestination.MEMORY:
+        this.consoleLogChain.log({
+          level, time, message, code
+        });
         break;
       case AlogyLogDestination.LOCAL_STORAGE:
         this.localStorageLogChain.log({
@@ -136,7 +141,7 @@ export class Alogy {
   /**
    * Put log code into the log group.
    * @param {number} code Log code
-   * @param {number} [logGroup=99] Log group 
+   * @param {number} [logGroup=99] Log group
    * @returns {number} Log code within group
    * @memberof LogAPI
    */
@@ -165,7 +170,7 @@ export class Alogy {
 
 export class LogAPI implements ILog {
   /**
-   * Construct a new LogAPI instance 
+   * Construct a new LogAPI instance
    * @param _alogy A reference to the used Alogy instance
    * @param logTo Log destination?
    * @param logGroup Which log group
@@ -178,7 +183,7 @@ export class LogAPI implements ILog {
   }
   /**
    * Log this debug message [level: debug]
-   * 
+   *
    * @param {string} message Debug message
    * @param {number} [code] Log code (if empty: auto generated)
    * @memberof LogAPI
@@ -188,7 +193,7 @@ export class LogAPI implements ILog {
   }
   /**
    * Log this info message [level: info]
-   * 
+   *
    * @param {string} message Info message
    * @param {number} [code] Log code (if empty: auto generated)
    * @memberof LogAPI
@@ -199,7 +204,7 @@ export class LogAPI implements ILog {
   }
   /**
    * Log this warning message [level: warn]
-   * 
+   *
    * @param {string} message Warning message
    * @param {number} [code] Log code (if empty: auto generated)
    * @memberof LogAPI
@@ -209,7 +214,7 @@ export class LogAPI implements ILog {
   }
   /**
    * Log this error message [level: error]
-   * 
+   *
    * @param {string} message Error message
    * @param {number} [code] Log code (if empty: auto generated)
    * @memberof LogAPI
@@ -221,7 +226,11 @@ export class LogAPI implements ILog {
 
 export enum AlogyLogDestination {
   /**
-   * @description Log to local storage 
+   * @description Only log to memory
+   */
+  MEMORY,
+  /**
+   * @description Log to local storage
    */
   LOCAL_STORAGE, // LS -> CONSOLE
   /**
