@@ -1,7 +1,7 @@
 /**
  * A logger that doesn't actually do anything. Used for terminating a chain of loggers.
  */
-var NullLogger = (function () {
+var NullLogger = /** @class */ (function () {
     function NullLogger() {
     }
     /**

@@ -2,7 +2,7 @@
  * Each node corresponds to an entry within the queue. This helps with
  * storage and removal from local storage.
  */
-var Node = (function () {
+var Node = /** @class */ (function () {
     /**
      * Constructs a node representing an entry in the queue.
      * @param config The queue configuration. This is used to provide the prefix for the key.

@@ -2,7 +2,7 @@
  * Logger that logs to to Google Analytics
  * @todo Not complete - needs implementation
  */
-var GoogleAnalyticsLogger = (function () {
+var GoogleAnalyticsLogger = /** @class */ (function () {
     /**
      * Constructs a GA logger
      * @param _formatter The formatter used to format the entry for the console

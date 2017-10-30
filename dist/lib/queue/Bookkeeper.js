@@ -3,7 +3,7 @@ import { Node } from './Node';
  * This class keeps track of the start, end and size of the queue
  * stored in local storage. It allows nodes to be created and removed.
  */
-var Bookkeeper = (function () {
+var Bookkeeper = /** @class */ (function () {
     /**
      * Creates a new Bookkeeper for a queue. It should be initialized using reset method.
      */

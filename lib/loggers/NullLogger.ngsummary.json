@@ -1,1 +1,1 @@
-{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"class","members":{"log":[{"__symbolic":"method"}]}}}],"symbols":[{"__symbol":0,"name":"NullLogger","filePath":"/home/niikoo/Angular/ng-alogy/lib/loggers/NullLogger.d.ts"}]}
+{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"class","members":{"log":[{"__symbolic":"method"}]}}}],"symbols":[{"__symbol":0,"name":"NullLogger","filePath":"C:/Users/dniko/Documents/Projects/ng-alogy/lib/loggers/NullLogger.d.ts"}]}

@@ -14,7 +14,7 @@ export { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
 // imports for this file only
 import { Injectable, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
-var Alogy = (function () {
+var Alogy = /** @class */ (function () {
     function Alogy() {
         /**
          * New log entry event -> triggers on new logs
@@ -79,6 +79,11 @@ var Alogy = (function () {
                 /*this.localStorageLogChain.log({
                   level, time, message: message
                 });*/
+                break;
+            case AlogyLogDestination.MEMORY:
+                this.consoleLogChain.log({
+                    level: level, time: time, message: message, code: code
+                });
                 break;
             case AlogyLogDestination.LOCAL_STORAGE:
                 this.localStorageLogChain.log({
@@ -145,7 +150,7 @@ var Alogy = (function () {
     return Alogy;
 }());
 export { Alogy };
-var LogAPI = (function () {
+var LogAPI = /** @class */ (function () {
     /**
      * Construct a new LogAPI instance
      * @param _alogy A reference to the used Alogy instance
@@ -205,13 +210,17 @@ export { LogAPI };
 export var AlogyLogDestination;
 (function (AlogyLogDestination) {
     /**
+     * @description Only log to memory
+     */
+    AlogyLogDestination[AlogyLogDestination["MEMORY"] = 0] = "MEMORY";
+    /**
      * @description Log to local storage
      */
-    AlogyLogDestination[AlogyLogDestination["LOCAL_STORAGE"] = 0] = "LOCAL_STORAGE";
+    AlogyLogDestination[AlogyLogDestination["LOCAL_STORAGE"] = 1] = "LOCAL_STORAGE";
     /**
      * @description Not implemented yet
      * @ignore
      */
-    AlogyLogDestination[AlogyLogDestination["GOOGLE_ANALYTICS"] = 1] = "GOOGLE_ANALYTICS"; // GA -> LS -> CONSOLE
+    AlogyLogDestination[AlogyLogDestination["GOOGLE_ANALYTICS"] = 2] = "GOOGLE_ANALYTICS"; // GA -> LS -> CONSOLE
 })(AlogyLogDestination || (AlogyLogDestination = {}));
 //# sourceMappingURL=index.js.map

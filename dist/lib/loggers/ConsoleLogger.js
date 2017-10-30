@@ -2,7 +2,7 @@ import { LogLevel } from '../core/LogLevel';
 /**
  * Logger that logs to the console.
  */
-var ConsoleLogger = (function () {
+var ConsoleLogger = /** @class */ (function () {
     /**
      * Constructs a console logger.
      * @param _formatter The formatter used to format the entry for the console

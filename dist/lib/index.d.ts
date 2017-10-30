@@ -123,12 +123,16 @@ export declare class LogAPI implements ILog {
 }
 export declare enum AlogyLogDestination {
     /**
+     * @description Only log to memory
+     */
+    MEMORY = 0,
+    /**
      * @description Log to local storage
      */
-    LOCAL_STORAGE = 0,
+    LOCAL_STORAGE = 1,
     /**
      * @description Not implemented yet
      * @ignore
      */
-    GOOGLE_ANALYTICS = 1,
+    GOOGLE_ANALYTICS = 2,
 }

@@ -3,7 +3,7 @@ import { LimitedSizeQueue } from '../queue/LimitedSizeQueue';
  * Logger that logs to a queue in local storage. Will overwrite oldest entries
  * when desired size is exceeded.
  */
-var LocalStorageLogger = (function () {
+var LocalStorageLogger = /** @class */ (function () {
     /**
      * Constructs a new local storage logger.
      * @param config The configuration defining the unique queue name, desired size etc.
