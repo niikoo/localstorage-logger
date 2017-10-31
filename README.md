@@ -1,4 +1,4 @@
-![Dependency status image](https://david-dm.org/niikoo/ng-alogy.svg)
+![https://david-dm.org/niikoo/ng-alogy](https://david-dm.org/niikoo/ng-alogy.svg)
 
 # ng-alogy
 
