@@ -1,3 +1,5 @@
+![Dependency status image](https://david-dm.org/niikoo/ng-alogy.svg)
+
 # ng-alogy
 
 [^**alogy, alogia; In medicine: An inabillity to speak**]: alogy. (n.d.) -Ologies &amp; -Isms. (2008). Retrieved August 4 2017 from http://www.thefreedictionary.com/alogy
