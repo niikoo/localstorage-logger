@@ -1,10 +1,15 @@
 import { Node } from './Node';
 import { Bookkeeper } from './Bookkeeper';
+import { IQueueConfiguration } from './IQueueConfiguration';
 /**
  * A limited-size queue that is persisted to local storage. Enqueuing
  * elements can remove the oldest elements in order to free up space.
  */
-var LimitedSizeQueue = /** @class */ (function () {
+var /**
+ * A limited-size queue that is persisted to local storage. Enqueuing
+ * elements can remove the oldest elements in order to free up space.
+ */
+LimitedSizeQueue = /** @class */ (function () {
     /**
      * Creates/restores a queue based on the configuration provided.
      * @param _config The settings for the queue
@@ -19,7 +24,17 @@ var LimitedSizeQueue = /** @class */ (function () {
      * based on the maximum sized defined in the queue configuration. May also throw
      * if local storage is out of space or corrupted.
      */
-    LimitedSizeQueue.prototype.enqueue = function (value) {
+    /**
+       * Enqueues an item in the queue. Throws if the value is too big to fit in local storage
+       * based on the maximum sized defined in the queue configuration. May also throw
+       * if local storage is out of space or corrupted.
+       */
+    LimitedSizeQueue.prototype.enqueue = /**
+       * Enqueues an item in the queue. Throws if the value is too big to fit in local storage
+       * based on the maximum sized defined in the queue configuration. May also throw
+       * if local storage is out of space or corrupted.
+       */
+    function (value) {
         var node = this._bookkeeper.createNextNode(value);
         var spaceRequirement = node.estimatedSize();
         var canFit = this._config.maxSizeInBytes >= spaceRequirement;
@@ -44,7 +59,15 @@ var LimitedSizeQueue = /** @class */ (function () {
      * If the queue has at least 1 item, it removes and returns the oldest item from the queue.
      * Otherwise, it will return nothing.
      */
-    LimitedSizeQueue.prototype.dequeue = function () {
+    /**
+       * If the queue has at least 1 item, it removes and returns the oldest item from the queue.
+       * Otherwise, it will return nothing.
+       */
+    LimitedSizeQueue.prototype.dequeue = /**
+       * If the queue has at least 1 item, it removes and returns the oldest item from the queue.
+       * Otherwise, it will return nothing.
+       */
+    function () {
         if (this.isEmpty())
             return;
         var node = this._bookkeeper.deleteFirstNode();
@@ -54,13 +77,25 @@ var LimitedSizeQueue = /** @class */ (function () {
     /**
      * Returns true if the queue is empty.
      */
-    LimitedSizeQueue.prototype.isEmpty = function () {
+    /**
+       * Returns true if the queue is empty.
+       */
+    LimitedSizeQueue.prototype.isEmpty = /**
+       * Returns true if the queue is empty.
+       */
+    function () {
         return this._bookkeeper.isEmpty();
     };
     /**
      * Iterates (without removal) through all items stored in the queue.
      */
-    LimitedSizeQueue.prototype.iterate = function (callback) {
+    /**
+       * Iterates (without removal) through all items stored in the queue.
+       */
+    LimitedSizeQueue.prototype.iterate = /**
+       * Iterates (without removal) through all items stored in the queue.
+       */
+    function (callback) {
         var _this = this;
         this._bookkeeper.iterateIndexValues(function (i) {
             var node = Node.fromLocalStorage(_this._config, i);
@@ -69,5 +104,9 @@ var LimitedSizeQueue = /** @class */ (function () {
     };
     return LimitedSizeQueue;
 }());
+/**
+ * A limited-size queue that is persisted to local storage. Enqueuing
+ * elements can remove the oldest elements in order to free up space.
+ */
 export { LimitedSizeQueue };
 //# sourceMappingURL=LimitedSizeQueue.js.map

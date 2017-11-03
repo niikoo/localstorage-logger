@@ -1,8 +1,13 @@
+import { IQueueConfiguration } from './IQueueConfiguration';
 /**
  * Each node corresponds to an entry within the queue. This helps with
  * storage and removal from local storage.
  */
-var Node = /** @class */ (function () {
+var /**
+ * Each node corresponds to an entry within the queue. This helps with
+ * storage and removal from local storage.
+ */
+Node = /** @class */ (function () {
     /**
      * Constructs a node representing an entry in the queue.
      * @param config The queue configuration. This is used to provide the prefix for the key.
@@ -17,14 +22,28 @@ var Node = /** @class */ (function () {
     /**
      * Returns an estimate of the size this will take up in local storage.
      */
-    Node.prototype.estimatedSize = function () {
+    /**
+       * Returns an estimate of the size this will take up in local storage.
+       */
+    Node.prototype.estimatedSize = /**
+       * Returns an estimate of the size this will take up in local storage.
+       */
+    function () {
         return this._serializedNode.length + this._key.length;
     };
     /**
      * Stores the serialized entry in local storage.
      * @return {boolean} Success?
      */
-    Node.prototype.store = function () {
+    /**
+       * Stores the serialized entry in local storage.
+       * @return {boolean} Success?
+       */
+    Node.prototype.store = /**
+       * Stores the serialized entry in local storage.
+       * @return {boolean} Success?
+       */
+    function () {
         try {
             localStorage.setItem(this._key, this._serializedNode);
             return true;
@@ -36,7 +55,13 @@ var Node = /** @class */ (function () {
     /**
      * Removes the entry from local storage if it exists.
      */
-    Node.prototype.remove = function () {
+    /**
+       * Removes the entry from local storage if it exists.
+       */
+    Node.prototype.remove = /**
+       * Removes the entry from local storage if it exists.
+       */
+    function () {
         localStorage.removeItem(this._key);
     };
     /**
@@ -44,7 +69,17 @@ var Node = /** @class */ (function () {
      * @param config The configuration containing the key prefix
      * @param index The index of the entry in the queue
      */
-    Node.createKey = function (config, index) {
+    /**
+       * Creates a key for an entry.
+       * @param config The configuration containing the key prefix
+       * @param index The index of the entry in the queue
+       */
+    Node.createKey = /**
+       * Creates a key for an entry.
+       * @param config The configuration containing the key prefix
+       * @param index The index of the entry in the queue
+       */
+    function (config, index) {
         return config.keyPrefix + "-item-" + index;
     };
     /**
@@ -52,12 +87,26 @@ var Node = /** @class */ (function () {
      * @param config The configuration containing the key prefix
      * @param index The index of the entry in the queue
      */
-    Node.fromLocalStorage = function (config, index) {
+    /**
+       * Loads an entry from local storage and deserializes it. Returns the associated node.
+       * @param config The configuration containing the key prefix
+       * @param index The index of the entry in the queue
+       */
+    Node.fromLocalStorage = /**
+       * Loads an entry from local storage and deserializes it. Returns the associated node.
+       * @param config The configuration containing the key prefix
+       * @param index The index of the entry in the queue
+       */
+    function (config, index) {
         var serializedNode = localStorage.getItem(Node.createKey(config, index));
         var value = JSON.parse(serializedNode || '{}');
         return new Node(config, index, value);
     };
     return Node;
 }());
+/**
+ * Each node corresponds to an entry within the queue. This helps with
+ * storage and removal from local storage.
+ */
 export { Node };
 //# sourceMappingURL=Node.js.map

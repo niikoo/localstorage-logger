@@ -1,6 +1,6 @@
 {
   "name": "ng-alogy-dev",
-  "version": "0.5.10",
+  "version": "0.6.1",
   "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
   "typescript": {
     "definition": "build/ng-alogy.d.ts"
@@ -39,8 +39,8 @@
   },
   "homepage": "https://github.com/niikoo/ng-logger#readme",
   "devDependencies": {
-    "@angular/compiler": "^4.4.6",
-    "@angular/compiler-cli": "^4.4.6",
+    "@angular/compiler": "^5.0.0",
+    "@angular/compiler-cli": "^5.0.0",
     "chai": "^4.1.2",
     "codeclimate-test-reporter": "^0.5.0",
     "del": "^3.0.0",
@@ -69,11 +69,11 @@
     "run-sequence": "^2.2.0",
     "sinon": "^4.0.2",
     "tsd": "^0.6.5",
-    "typescript": "^2.5.3",
+    "typescript": "^2.4.2",
     "uglify-js": "^3.1.6"
   },
   "dependencies": {
-    "@angular/core": "^4.4.6",
+    "@angular/core": "^5.0.0",
     "@types/google.analytics": "0.0.36",
     "jshint": "^2.9.5",
     "rxjs": "^5.5.2",

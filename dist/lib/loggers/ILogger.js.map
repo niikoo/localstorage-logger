@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"ILogger.js","sourceRoot":"","sourcesContent":[]}
+{"version":3,"file":"ILogger.js","sourceRoot":"","sources":["../../../lib/loggers/ILogger.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,SAAS,EAAC,MAAM,mBAAmB,CAAC","sourcesContent":["import {ILogEntry} from '../core/ILogEntry';\r\n\r\n/**\r\n * Interface for logging individual log entries.\r\n */\r\nexport interface ILogger {\r\n  /**\r\n   * Logs a log entry.\r\n   * @param entry The log entry\r\n   */\r\n  log(entry: ILogEntry): void;\r\n}\r\n"]}

@@ -5,17 +5,17 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "lib": ["es2015", "dom"],
-        "baseUrl": ".",
+        "lib": ["es2015", "dom", "es6", "es7"],
         "stripInternal": true,
         "strictNullChecks": true,
         "noImplicitAny": true,
         "module": "es2015",
+        "baseUrl": "",
         "moduleResolution": "node",
         "paths": {
-            "@angular/core": ["node_modules/@angular/core"],
-            "rxjs/*": ["node_modules/rxjs/*"],
-            "@types/*": ["node_modules/@types/*"]
+            "@angular/core": ["../node_modules/@angular/core"],
+            "rxjs/*": ["../node_modules/rxjs/*"],
+            "@types/*": ["../node_modules/@types/*"]
         },
         "rootDir": ".",
         "outDir": "./dist",
@@ -23,8 +23,7 @@
         "skipLibCheck": true
     },
     "files": [
-        "./lib/index.ts",
-        "./lib/ILog.ts"
+        "./lib/index.ts"
     ],
     "angularCompilerOptions": {
         "strictMetadataEmit": true

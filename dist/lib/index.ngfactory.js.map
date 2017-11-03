@@ -1,0 +1,1 @@
+{"version":3,"file":"index.ngfactory.js","sourceRoot":"","sources":["../../lib/index.ngfactory.ts"],"names":[],"mappings":"","sourcesContent":["import * as i0 from '@angular/core';\nimport * as i1 from './index';\nexport const AlogyModuleNgFactory:i0.NgModuleFactory<i1.AlogyModule> = (null as any);\n"]}

@@ -1,7 +1,7 @@
 {
   "name": "ng-alogy",
-  "version": "0.5.9",
-  "description": "A logging library for Angular 4+. Based on the awesome work of ZachBray.",
+  "version": "0.6.1",
+  "description": "A logging library for Angular 5. Based on the awesome work of ZachBray.",
   "typescript": {
     "definition": "./index.d.ts"
   },
@@ -16,7 +16,7 @@
     "angular",
     "logging",
     "log",
-    "angular4",
+    "angular5",
     "logging-library",
     "logger",
     "localstorage"
@@ -28,11 +28,12 @@
   },
   "homepage": "https://github.com/niikoo/ng-alogy#readme",
   "dependencies": {
+    "@angular/compiler": "^4.4.6",
+    "@angular/core": "^4.4.6",
     "@types/google.analytics": "0.0.34",
-    "@angular/compiler": "^4.3.3",
-    "@angular/core": "^4.3.3",
-    "rxjs": "^5.4.2",
-    "typescript": "^2.4.2"
+    "rxjs": "^5.5.2",
+    "typescript": "^2.5.3",
+    "zone.js": "^0.8.4"
   },
   "readme": "./README.md"
 }

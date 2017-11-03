@@ -1,8 +1,15 @@
+import { ILogger } from './ILogger';
+import { ILogEntry } from '../core/ILogEntry';
+import { ILogEntryFormatter } from '../formatters/ILogEntryFormatter';
 /**
  * Logger that logs to to Google Analytics
  * @todo Not complete - needs implementation
  */
-var GoogleAnalyticsLogger = /** @class */ (function () {
+var /**
+ * Logger that logs to to Google Analytics
+ * @todo Not complete - needs implementation
+ */
+GoogleAnalyticsLogger = /** @class */ (function () {
     /**
      * Constructs a GA logger
      * @param _formatter The formatter used to format the entry for the console
@@ -16,9 +23,21 @@ var GoogleAnalyticsLogger = /** @class */ (function () {
      * Logs an entry to GA
      * @param entry The entry to log
      */
-    GoogleAnalyticsLogger.prototype.log = function (entry) {
+    /**
+         * Logs an entry to GA
+         * @param entry The entry to log
+         */
+    GoogleAnalyticsLogger.prototype.log = /**
+         * Logs an entry to GA
+         * @param entry The entry to log
+         */
+    function (entry) {
     };
     return GoogleAnalyticsLogger;
 }());
+/**
+ * Logger that logs to to Google Analytics
+ * @todo Not complete - needs implementation
+ */
 export { GoogleAnalyticsLogger };
 //# sourceMappingURL=GoogleAnalyticsLogger.js.map

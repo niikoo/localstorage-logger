@@ -1,9 +1,15 @@
+import { IQueueConfiguration } from './IQueueConfiguration';
+import { IBookkeepingInfo } from './IBookkeepingInfo';
 import { Node } from './Node';
 /**
  * This class keeps track of the start, end and size of the queue
  * stored in local storage. It allows nodes to be created and removed.
  */
-var Bookkeeper = /** @class */ (function () {
+var /**
+ * This class keeps track of the start, end and size of the queue
+ * stored in local storage. It allows nodes to be created and removed.
+ */
+Bookkeeper = /** @class */ (function () {
     /**
      * Creates a new Bookkeeper for a queue. It should be initialized using reset method.
      */
@@ -13,7 +19,13 @@ var Bookkeeper = /** @class */ (function () {
     /**
      * Stores the current state of the queue to local storage.
      */
-    Bookkeeper.prototype.store = function () {
+    /**
+       * Stores the current state of the queue to local storage.
+       */
+    Bookkeeper.prototype.store = /**
+       * Stores the current state of the queue to local storage.
+       */
+    function () {
         var _this = this;
         try {
             var serializedInfo = JSON.stringify(this._info);
@@ -47,7 +59,15 @@ var Bookkeeper = /** @class */ (function () {
      * Resets the start, end and size counts to what was last persisted to
      * local storage.
      */
-    Bookkeeper.prototype.reset = function () {
+    /**
+       * Resets the start, end and size counts to what was last persisted to
+       * local storage.
+       */
+    Bookkeeper.prototype.reset = /**
+       * Resets the start, end and size counts to what was last persisted to
+       * local storage.
+       */
+    function () {
         this._added = [];
         this._removed = [];
         var serializedInfo = localStorage.getItem(this._config.keyPrefix);
@@ -66,20 +86,40 @@ var Bookkeeper = /** @class */ (function () {
     /**
      * Returns true if the queue has no elements.
      */
-    Bookkeeper.prototype.isEmpty = function () {
+    /**
+       * Returns true if the queue has no elements.
+       */
+    Bookkeeper.prototype.isEmpty = /**
+       * Returns true if the queue has no elements.
+       */
+    function () {
         return this._info.sizeInBytes === 0;
     };
     /**
      * Calculates the projected free space. This takes into account modifications.
      */
-    Bookkeeper.prototype.remainingSpace = function () {
+    /**
+       * Calculates the projected free space. This takes into account modifications.
+       */
+    Bookkeeper.prototype.remainingSpace = /**
+       * Calculates the projected free space. This takes into account modifications.
+       */
+    function () {
         return this._config.maxSizeInBytes - this._info.sizeInBytes;
     };
     /**
      * Creates a new node at the end of the queue.
      * @param value The value to store as an element of the queue.
      */
-    Bookkeeper.prototype.createNextNode = function (value) {
+    /**
+       * Creates a new node at the end of the queue.
+       * @param value The value to store as an element of the queue.
+       */
+    Bookkeeper.prototype.createNextNode = /**
+       * Creates a new node at the end of the queue.
+       * @param value The value to store as an element of the queue.
+       */
+    function (value) {
         var node = new Node(this._config, this._info.nextFreeIndex, value);
         this._info.nextFreeIndex = this._nextIndex(this._info.nextFreeIndex);
         this._info.sizeInBytes += node.estimatedSize();
@@ -89,7 +129,13 @@ var Bookkeeper = /** @class */ (function () {
     /**
      * Removes and returns the first stored node. The consumer should check that there is a node to remove first.
      */
-    Bookkeeper.prototype.deleteFirstNode = function () {
+    /**
+       * Removes and returns the first stored node. The consumer should check that there is a node to remove first.
+       */
+    Bookkeeper.prototype.deleteFirstNode = /**
+       * Removes and returns the first stored node. The consumer should check that there is a node to remove first.
+       */
+    function () {
         var node = Node.fromLocalStorage(this._config, this._info.startIndex);
         this._info.startIndex = this._nextIndex(this._info.startIndex);
         this._info.sizeInBytes -= node.estimatedSize();
@@ -100,7 +146,15 @@ var Bookkeeper = /** @class */ (function () {
      * Iterates through the index values of the elements in the queue. These can be used to retrieve the elements.
      * @param callback The function that will be invoked once for each index value used in the queue.
      */
-    Bookkeeper.prototype.iterateIndexValues = function (callback) {
+    /**
+       * Iterates through the index values of the elements in the queue. These can be used to retrieve the elements.
+       * @param callback The function that will be invoked once for each index value used in the queue.
+       */
+    Bookkeeper.prototype.iterateIndexValues = /**
+       * Iterates through the index values of the elements in the queue. These can be used to retrieve the elements.
+       * @param callback The function that will be invoked once for each index value used in the queue.
+       */
+    function (callback) {
         for (var i = this._info.startIndex; i !== this._info.nextFreeIndex; i = this._nextIndex(i)) {
             callback(i);
         }
@@ -109,11 +163,23 @@ var Bookkeeper = /** @class */ (function () {
      * Returns the next index value (modulo MAX_SAFE_INTEGER).
      * @param index The previous index value.
      */
-    Bookkeeper.prototype._nextIndex = function (index) {
+    /**
+       * Returns the next index value (modulo MAX_SAFE_INTEGER).
+       * @param index The previous index value.
+       */
+    Bookkeeper.prototype._nextIndex = /**
+       * Returns the next index value (modulo MAX_SAFE_INTEGER).
+       * @param index The previous index value.
+       */
+    function (index) {
         var MAX_SAFE_INTEGER = 9007199254740991;
         return (index + 1) % MAX_SAFE_INTEGER;
     };
     return Bookkeeper;
 }());
+/**
+ * This class keeps track of the start, end and size of the queue
+ * stored in local storage. It allows nodes to be created and removed.
+ */
 export { Bookkeeper };
 //# sourceMappingURL=Bookkeeper.js.map

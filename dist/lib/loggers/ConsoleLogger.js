@@ -1,8 +1,14 @@
+import { ILogger } from './ILogger';
+import { ILogEntry } from '../core/ILogEntry';
+import { ILogEntryFormatter } from '../formatters/ILogEntryFormatter';
 import { LogLevel } from '../core/LogLevel';
 /**
  * Logger that logs to the console.
  */
-var ConsoleLogger = /** @class */ (function () {
+var /**
+ * Logger that logs to the console.
+ */
+ConsoleLogger = /** @class */ (function () {
     /**
      * Constructs a console logger.
      * @param _formatter The formatter used to format the entry for the console
@@ -16,7 +22,15 @@ var ConsoleLogger = /** @class */ (function () {
      * Logs an entry to the console.
      * @param entry The entry to log
      */
-    ConsoleLogger.prototype.log = function (entry) {
+    /**
+       * Logs an entry to the console.
+       * @param entry The entry to log
+       */
+    ConsoleLogger.prototype.log = /**
+       * Logs an entry to the console.
+       * @param entry The entry to log
+       */
+    function (entry) {
         var formattedMessage = this._formatter.format(entry);
         switch (entry.level) {
             case LogLevel.DEBUG:
@@ -43,5 +57,8 @@ var ConsoleLogger = /** @class */ (function () {
     };
     return ConsoleLogger;
 }());
+/**
+ * Logger that logs to the console.
+ */
 export { ConsoleLogger };
 //# sourceMappingURL=ConsoleLogger.js.map
