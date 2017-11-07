@@ -67,10 +67,10 @@
     "mocha": "^4.0.1",
     "rollup": "^0.50.0",
     "run-sequence": "^2.2.0",
-    "sinon": "^4.0.2",
+    "sinon": "^4.1.1",
     "tsd": "^0.6.5",
-    "typescript": "^2.4.2",
-    "uglify-js": "^3.1.6"
+    "typescript": "=2.4.2",
+    "uglify-js": "^3.1.8"
   },
   "dependencies": {
     "@angular/core": "^5.0.0",

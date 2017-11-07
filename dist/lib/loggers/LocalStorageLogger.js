@@ -1,6 +1,3 @@
-import { ILogger } from './ILogger';
-import { ILogEntry } from '../core/ILogEntry';
-import { ILocalStorageLoggerConfiguration } from './ILocalStorageLoggerConfiguration';
 import { LimitedSizeQueue } from '../queue/LimitedSizeQueue';
 /**
  * Logger that logs to a queue in local storage. Will overwrite oldest entries
@@ -10,7 +7,7 @@ var /**
  * Logger that logs to a queue in local storage. Will overwrite oldest entries
  * when desired size is exceeded.
  */
-LocalStorageLogger = /** @class */ (function () {
+LocalStorageLogger = (function () {
     /**
      * Constructs a new local storage logger.
      * @param config The configuration defining the unique queue name, desired size etc.

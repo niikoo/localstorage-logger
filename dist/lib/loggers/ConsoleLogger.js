@@ -1,6 +1,3 @@
-import { ILogger } from './ILogger';
-import { ILogEntry } from '../core/ILogEntry';
-import { ILogEntryFormatter } from '../formatters/ILogEntryFormatter';
 import { LogLevel } from '../core/LogLevel';
 /**
  * Logger that logs to the console.
@@ -8,7 +5,7 @@ import { LogLevel } from '../core/LogLevel';
 var /**
  * Logger that logs to the console.
  */
-ConsoleLogger = /** @class */ (function () {
+ConsoleLogger = (function () {
     /**
      * Constructs a console logger.
      * @param _formatter The formatter used to format the entry for the console

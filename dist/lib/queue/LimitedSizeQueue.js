@@ -1,6 +1,5 @@
 import { Node } from './Node';
 import { Bookkeeper } from './Bookkeeper';
-import { IQueueConfiguration } from './IQueueConfiguration';
 /**
  * A limited-size queue that is persisted to local storage. Enqueuing
  * elements can remove the oldest elements in order to free up space.
@@ -9,7 +8,7 @@ var /**
  * A limited-size queue that is persisted to local storage. Enqueuing
  * elements can remove the oldest elements in order to free up space.
  */
-LimitedSizeQueue = /** @class */ (function () {
+LimitedSizeQueue = (function () {
     /**
      * Creates/restores a queue based on the configuration provided.
      * @param _config The settings for the queue

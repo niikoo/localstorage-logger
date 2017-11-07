@@ -1,6 +1,3 @@
-import { ILogger } from './ILogger';
-import { ILogEntry } from '../core/ILogEntry';
-import { ILogEntryFormatter } from '../formatters/ILogEntryFormatter';
 /**
  * Logger that logs to to Google Analytics
  * @todo Not complete - needs implementation
@@ -9,7 +6,7 @@ var /**
  * Logger that logs to to Google Analytics
  * @todo Not complete - needs implementation
  */
-GoogleAnalyticsLogger = /** @class */ (function () {
+GoogleAnalyticsLogger = (function () {
     /**
      * Constructs a GA logger
      * @param _formatter The formatter used to format the entry for the console

@@ -1,19 +1,23 @@
-import { ILogEntry } from './core/ILogEntry';
 import { ConsoleLogger } from './loggers/ConsoleLogger';
 import { DefaultFormatter } from './formatters/DefaultFormatter';
 import { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
-import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
-import { ILog } from './ILog';
-import { IQueueConfiguration } from './queue/IQueueConfiguration';
-import { LimitedSizeQueue } from './queue/LimitedSizeQueue';
 import { LocalStorageLogger } from './loggers/LocalStorageLogger';
 import { LogLevel } from './core/LogLevel';
 import { NullLogger } from './loggers/NullLogger';
 // imports for this file only
 import { Injectable, EventEmitter } from '../node_modules/@angular/core';
 import 'rxjs/Rx';
-var Alogy = /** @class */ (function () {
+var Alogy = (function () {
     function Alogy() {
+        /**
+           * New log entry event -> triggers on new logs
+           * @private
+           * @type {number}
+           * @memberof Alogy
+           */
+        this.newLogEntry = new EventEmitter();
+        this.logGroupSize = 100;
+        this._timestampProvider = function () { return new Date; };
     }
     /**
      * Set up Alogy - Global config
@@ -207,10 +211,15 @@ var Alogy = /** @class */ (function () {
         code = parseInt(logGroup + ((fld < 10) ? '0' : '') + fld);
         return (((code < min || code > (min + (this.logGroupSize - 1))) ? this.stringToLogCode(code.toString()) : code));
     };
+    Alogy.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    Alogy.ctorParameters = function () { return []; };
     return Alogy;
 }());
 export { Alogy };
-var LogAPI = /** @class */ (function () {
+var LogAPI = (function () {
     /**
      * Construct a new LogAPI instance
      * @param _alogy A reference to the used Alogy instance
