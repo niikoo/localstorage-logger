@@ -38,16 +38,18 @@ export declare class Alogy {
     writeToLog(logTo: AlogyLogDestination, level: LogLevel, message: string, logGroup: number, code?: number): void;
     /**
      * Returns an array with log entries formatted and returned as strings.
+     * @param {AlogyLogDestination} from - Log source
      * @returns {string[]} String array of logs in Local Storage
      * @memberof Alogy
      */
-    exportToStringArray(): string[];
+    exportToStringArray(from: AlogyLogDestination): string[];
     /**
      * Returns an array with all <ILogEntry> in Local Storage
+     * @param {AlogyLogDestination} from - Log source
      * @returns {Array<ILogEntry>} All log entries
      * @memberof Alogy
      */
-    exportToLogEntryArray(): Array<ILogEntry>;
+    exportToLogEntryArray(from: AlogyLogDestination): Array<ILogEntry>;
     /**
      * Put log code into the log group.
      * @param {number} code Log code

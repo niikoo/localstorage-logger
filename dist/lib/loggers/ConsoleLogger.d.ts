@@ -7,6 +7,7 @@ import { ILogEntryFormatter } from '../formatters/ILogEntryFormatter';
 export declare class ConsoleLogger implements ILogger {
     private _formatter;
     private _nextLogger;
+    private entries;
     /**
      * Constructs a console logger.
      * @param _formatter The formatter used to format the entry for the console
@@ -18,4 +19,8 @@ export declare class ConsoleLogger implements ILogger {
      * @param entry The entry to log
      */
     log(entry: ILogEntry): void;
+    /**
+     * Returns all log entries that are still held in local storage.
+     */
+    allEntries(): Array<ILogEntry>;
 }

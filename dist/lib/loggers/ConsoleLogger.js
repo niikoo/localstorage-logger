@@ -11,6 +11,7 @@ export class ConsoleLogger {
     constructor(_formatter, _nextLogger) {
         this._formatter = _formatter;
         this._nextLogger = _nextLogger;
+        this.entries = [];
     }
     /**
        * Logs an entry to the console.
@@ -39,7 +40,14 @@ export class ConsoleLogger {
                 console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
                 break;
         }
+        this.entries.push(entry);
         this._nextLogger.log(entry);
+    }
+    /**
+       * Returns all log entries that are still held in local storage.
+       */
+    allEntries() {
+        return this.entries;
     }
 }
 //# sourceMappingURL=ConsoleLogger.js.map
