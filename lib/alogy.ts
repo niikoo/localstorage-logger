@@ -106,22 +106,44 @@ export class Alogy {
 
   /**
    * Returns an array with log entries formatted and returned as strings.
+   * @param {AlogyLogDestination} from - Log source
    * @returns {string[]} String array of logs in Local Storage
    * @memberof Alogy
    */
-  exportToStringArray(): string[] {
-    return this.localStorageLogChain.allEntries().map(
-      entry => this.formatter.format(entry)
-    );
+  exportToStringArray(from: AlogyLogDestination): string[] {
+    switch(from) {
+      case AlogyLogDestination.MEMORY:
+        return this.consoleLogChain.allEntries().map(
+          entry => this.formatter.format(entry)
+        );
+      case AlogyLogDestination.LOCAL_STORAGE:
+        return this.localStorageLogChain.allEntries().map(
+          entry => this.formatter.format(entry)
+        );
+      default:
+        return [<ILogEntry>{ level: 1, code: -1, message: '[ALOGY][LOG EXPORT] Wrong log source'}].map(
+          entry => this.formatter.format(entry)
+        );
+    }
   }
 
   /**
    * Returns an array with all <ILogEntry> in Local Storage
+   * @param {AlogyLogDestination} from - Log source
    * @returns {Array<ILogEntry>} All log entries
    * @memberof Alogy
    */
-  exportToLogEntryArray(): Array<ILogEntry> {
-    return this.localStorageLogChain.allEntries();
+  exportToLogEntryArray(from: AlogyLogDestination): Array<ILogEntry> {
+    switch(from) {
+      case AlogyLogDestination.MEMORY:
+        return this.consoleLogChain.allEntries();
+      case AlogyLogDestination.LOCAL_STORAGE:
+        return this.localStorageLogChain.allEntries();
+      default:
+        return [
+          <ILogEntry>{ level: 1, code: -1, message: '[ALOGY][LOG EXPORT] Wrong log source'}
+        ];
+    }
   }
 
   /**

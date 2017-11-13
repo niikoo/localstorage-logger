@@ -7,6 +7,7 @@ import { LogLevel } from '../core/LogLevel';
  * Logger that logs to the console.
  */
 export class ConsoleLogger implements ILogger {
+  private entries: Array<ILogEntry> = [];
   /**
    * Constructs a console logger.
    * @param _formatter The formatter used to format the entry for the console
@@ -42,6 +43,13 @@ export class ConsoleLogger implements ILogger {
         console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
         break;
     }
+    this.entries.push(entry);
     this._nextLogger.log(entry);
+  }
+  /**
+   * Returns all log entries that are still held in local storage.
+   */
+  allEntries() : Array<ILogEntry> {
+    return this.entries;
   }
 }
