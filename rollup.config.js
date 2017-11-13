@@ -1,11 +1,12 @@
 export default {
-    entry: 'dist/index.js',
-    dest: 'dist/ng-alogy.min.js',
-    sourceMap: false,
-    format: 'umd',
-    moduleName: 'ngAlogy',
+    input: 'dist/index.js',
+    output: 'dist/ng-alogy.min.js',
+    sourcemap: false,
+    output: {
+      format: 'amd',
+    },
+    name: 'ng-alogy',
     globals: {
-        '@angular/core': 'ng.core',
         'rxjs/Observable': 'Rx',
         'rxjs/ReplaySubject': 'Rx',
         'rxjs/add/operator/map': 'Rx.Observable.prototype',

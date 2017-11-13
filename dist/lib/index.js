@@ -10,19 +10,15 @@ export { GoogleAnalyticsLogger } from './loggers/GoogleAnalyticsLogger';
 export { Alogy, AlogyLogDestination, LogAPI } from './alogy';
 export { Bookkeeper } from './queue/Bookkeeper';
 export { Node } from './queue/Node';
-var AlogyModule = (function () {
-    function AlogyModule() {
-    }
-    AlogyModule.decorators = [
-        { type: NgModule, args: [{
-                    providers: [
-                        Alogy
-                    ]
-                },] },
-    ];
-    /** @nocollapse */
-    AlogyModule.ctorParameters = function () { return []; };
-    return AlogyModule;
-}());
-export { AlogyModule };
+export class AlogyModule {
+}
+AlogyModule.decorators = [
+    { type: NgModule, args: [{
+                providers: [
+                    Alogy
+                ]
+            },] },
+];
+/** @nocollapse */
+AlogyModule.ctorParameters = () => [];
 //# sourceMappingURL=index.js.map

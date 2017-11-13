@@ -13,7 +13,6 @@
         "baseUrl": "",
         "moduleResolution": "node",
         "paths": {
-            "@angular/core": ["../node_modules/@angular/core"],
             "rxjs/*": ["../node_modules/rxjs/*"],
             "@types/*": ["../node_modules/@types/*"]
         },
@@ -26,6 +25,7 @@
         "./lib/index.ts"
     ],
     "angularCompilerOptions": {
-        "strictMetadataEmit": true
+        "strictMetadataEmit": true,
+        "genDir": "compiled"
     }
 }

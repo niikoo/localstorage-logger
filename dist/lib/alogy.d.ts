@@ -2,8 +2,7 @@ import { ILogEntry } from './core/ILogEntry';
 import { ILocalStorageLoggerConfiguration } from './loggers/ILocalStorageLoggerConfiguration';
 import { ILog } from './ILog';
 import { LogLevel } from './core/LogLevel';
-import { EventEmitter } from '../node_modules/@angular/core';
-import 'rxjs/Rx';
+import { Subject } from "rxjs/Subject";
 export declare class Alogy {
     private _alogy;
     private formatter;
@@ -17,7 +16,7 @@ export declare class Alogy {
      * @type {number}
      * @memberof Alogy
      */
-    newLogEntry: EventEmitter<ILogEntry>;
+    newLogEntry: Subject<ILogEntry>;
     private logGroupSize;
     private _timestampProvider;
     /**

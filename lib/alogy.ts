@@ -11,11 +11,8 @@ import { LogLevel } from './core/LogLevel';
 import { NullLogger } from './loggers/NullLogger';
 
 // imports for this file only
-import { Injectable, EventEmitter } from '../node_modules/@angular/core';
-import 'rxjs/Rx';
+import { Subject } from "rxjs/Subject";
 
-
-@Injectable()
 export class Alogy {
   private _alogy: ILog;
   private formatter: DefaultFormatter;
@@ -29,7 +26,7 @@ export class Alogy {
    * @type {number}
    * @memberof Alogy
    */
-  public newLogEntry: EventEmitter<ILogEntry> = new EventEmitter<ILogEntry>();
+  public newLogEntry: Subject<ILogEntry> = new Subject<ILogEntry>();
   private logGroupSize: number = 100; // Size of log group.Do not touch, unless you're know what you're doing. Default 100, that is for example 0- 99. With group 6, it's: 600-699
   private _timestampProvider: () => Date = () => new Date;
   /**
@@ -77,12 +74,12 @@ export class Alogy {
     /*
     * All logs trigger the newLogEntry event
     */
-    this.newLogEntry.emit(<ILogEntry>{
+    this.newLogEntry.next((<ILogEntry>{
       code: code,
       message: message,
       time: time,
       level: level
-    });
+    }));
 
     /**
      * To outputs
