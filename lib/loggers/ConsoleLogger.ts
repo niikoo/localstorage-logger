@@ -43,6 +43,9 @@ export class ConsoleLogger implements ILogger {
         console.debug('ERROR! UNKNOWN LOG LEVEL. Message: ' + formattedMessage);
         break;
     }
+    if(this.entries.length > 100) {
+      let discard = this.entries.shift();
+    }
     this.entries.push(entry);
     this._nextLogger.log(entry);
   }
