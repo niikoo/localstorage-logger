@@ -1,6 +1,6 @@
 {
   "name": "ng-alogy",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "A logging library for Angular 5. Based on the awesome work of ZachBray.",
   "typescript": {
     "definition": "./index.d.ts"
